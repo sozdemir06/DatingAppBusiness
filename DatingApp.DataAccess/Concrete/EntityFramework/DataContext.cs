@@ -14,8 +14,10 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ValueMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
         }
 
         public DbSet<Value> Values { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

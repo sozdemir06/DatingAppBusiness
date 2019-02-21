@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "78c012f3dca7e97fd5070e99a4f61acb6b98d016"
+    "signature": "d4857b3b1e83a7425d52f13decfe7484417065d2"
   },
   "compilationOptions": {},
   "targets": {
@@ -14,6 +14,17 @@
         },
         "runtime": {
           "DatingApp.Entities.dll": {}
+        }
+      },
+      "FluentValidation/8.1.3": {
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.1.3.0"
+          }
         }
       },
       "Microsoft.EntityFrameworkCore/2.2.1": {
@@ -173,6 +184,19 @@
       "NETStandard.Library/2.0.3": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
+        }
+      },
+      "PostSharp/6.0.34": {
+        "dependencies": {
+          "PostSharp.Redist": "6.0.34"
+        }
+      },
+      "PostSharp.Redist/6.0.34": {
+        "runtime": {
+          "lib/netstandard2.0/PostSharp.dll": {
+            "assemblyVersion": "6.0.34.0",
+            "fileVersion": "6.0.34.0"
+          }
         }
       },
       "Remotion.Linq/2.2.0": {
@@ -498,7 +522,9 @@
       },
       "DatingApp.Core/1.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.1"
+          "FluentValidation": "8.1.3",
+          "Microsoft.EntityFrameworkCore": "2.2.1",
+          "PostSharp": "6.0.34"
         },
         "runtime": {
           "DatingApp.Core.dll": {}
@@ -511,6 +537,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "FluentValidation/8.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OHV6NFyGKP+v8us+X+yJ5hjFEjiJUp6MJyRNzcf4jc7GnRHsrmBwV6IyrQQ65a73r8ikaszH33InQG9ANB5j2g==",
+      "path": "fluentvalidation/8.1.3",
+      "hashPath": "fluentvalidation.8.1.3.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/2.2.1": {
       "type": "package",
@@ -630,6 +663,20 @@
       "sha512": "sha512-st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
+    },
+    "PostSharp/6.0.34": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-53EV2i9t6MD/0skB3yvcIl47R3MAh4VBmt3kqG40fonsIQpjZx3o39eI7ZdZ9wa1XWG/oao/TcOAJ/J0OQr6MA==",
+      "path": "postsharp/6.0.34",
+      "hashPath": "postsharp.6.0.34.nupkg.sha512"
+    },
+    "PostSharp.Redist/6.0.34": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GD5SJA1K+XcQRzlYIPCBCQq7wpYDFOYoch0JbPZUKgZHUVduQSxBLf8PTyzGfWlvKmLeFAQHlWcWqUeUTltB6w==",
+      "path": "postsharp.redist/6.0.34",
+      "hashPath": "postsharp.redist.6.0.34.nupkg.sha512"
     },
     "Remotion.Linq/2.2.0": {
       "type": "package",
