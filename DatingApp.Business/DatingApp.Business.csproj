@@ -9,6 +9,11 @@
     <PackageReference Include="AutoMapper" Version="8.0.0"/>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0"/>
     <PackageReference Include="PostSharp" Version="6.0.34"/>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.4.0"/>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatingApp.DataAccess\DatingApp.DataAccess.csproj"/>

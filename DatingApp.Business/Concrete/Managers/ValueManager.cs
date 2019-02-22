@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DatingApp.Business.Abstract;
 using DatingApp.DataAccess.Abstract;
 using DatingApp.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DatingApp.Business.Concrete.Managers
 {
@@ -14,6 +15,8 @@ namespace DatingApp.Business.Concrete.Managers
         {
             this.valueDal = valueDal;
         }
+
+       
         public async Task<IEnumerable<Value>> GetAllValues()
         {
             return await valueDal.GetList();

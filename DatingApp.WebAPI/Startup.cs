@@ -33,6 +33,7 @@ namespace DatingApp.WebAPI
                  });
             services.AddCors();
             services.AutoMapperService();
+            services.AuthServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +51,7 @@ namespace DatingApp.WebAPI
 
             //app.UseHttpsRedirection();
             app.UseCors(cors=>cors.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

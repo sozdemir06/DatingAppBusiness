@@ -13,6 +13,7 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
 
             //Domain To Api Resource
             CreateMap<User,UserForDetailedDto>();
+            CreateMap<User,UserForReturnTokenDto>();
 
         }
     }
