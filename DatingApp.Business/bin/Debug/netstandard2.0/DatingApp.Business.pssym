@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Symbols LinesOfCode="73" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.0.34.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
+  <Evolution Source="#1=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Login([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForLoginDto)" Target="#2=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Login&gt;d__3::MoveNext()" />
+  <Evolution Source="#3=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Register([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForRegisterDto)" Target="#4=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Register&gt;d__4::MoveNext()" />
+  <Class Class="#5=T:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.ValidationAspects.FluentValidationAspect">
+    <Instance Declaration="#1" Id="faab1a292b04d7e8">
+      <Target LinesAvoided="2">
+        <JoinPoint Advised="#2" Advising="#5" Description="#6=Wrapped by advice(s) OnEntry" Ordinal="0" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#3" Id="faab1a294cffce58">
+      <Target LinesAvoided="2">
+        <JoinPoint Advised="#4" Advising="#5" Description="#6" />
+      </Target>
+    </Instance>
+  </Class>
+  <Annotation Target="#7=M:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.ValidationAspects.FluentValidationAspect::OnEntry(PostSharp.Aspects.MethodExecutionArgs)" Arguments="#8=2" Description="#9=PostSharp estimates that 2 line(s) of code are saved every time this advice is applied. Use the [LinesOfCodeAvoided] attribute on the aspect or specify the LinesOfCodeAvoided property on the advice attribute to override this value." />
+</Symbols>

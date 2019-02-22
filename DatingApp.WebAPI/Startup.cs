@@ -32,6 +32,7 @@ namespace DatingApp.WebAPI
                      opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                  });
             services.AddCors();
+            services.AutoMapperService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

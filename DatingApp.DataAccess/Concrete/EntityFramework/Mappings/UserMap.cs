@@ -9,6 +9,7 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework.Mappings
         {
             builder.ToTable("Users");
             builder.HasKey(x=>x.Id);
+            builder.HasIndex(e=>e.Email).IsUnique();
 
             builder.Property(x=>x.PasswordHash).HasColumnName("PasswordHash");
             builder.Property(x=>x.PasswordSalt).HasColumnName("PasswordSalt");
