@@ -1,0 +1,34 @@
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxLayout fxLayoutGap="10px">
+    <h1>DatinApp</h1>
+    <div class="link">
+      <button mat-button>Link-1</button>
+      <button mat-button>Link-1</button>
+      <button mat-button>Link-1</button>
+    </div> 
+  </div>
+  <div *ngIf="!loggedIn()" fxFlexAlign="baseline">
+    <form #loginForm="ngForm" (ngSubmit)="login()">
+       <mat-form-field>
+         <input matInput type="email" placeholder="Email" required name="email" [(ngModel)]="model.email" >
+       </mat-form-field>
+       <mat-form-field>
+        <input matInput type="password" placeholder="password" required name="password" [(ngModel)]="model.password">
+      </mat-form-field>
+      <button mat-raised-button color="primary">Login</button>
+    </form>
+  </div>
+  <div *ngIf="loggedIn()">
+      <button mat-button [matMenuTriggerFor]="menu">Welcome User</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>Edit Profile</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      </mat-menu>
+  </div>
+</mat-toolbar>
