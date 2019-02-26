@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Symbols LinesOfCode="88" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.0.34.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
+<Symbols LinesOfCode="95" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.0.34.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
   <Evolution Source="#1=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Login([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForLoginDto)" Target="#2=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Login&gt;d__4::MoveNext()" />
   <Evolution Source="#3=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Register([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForRegisterDto)" Target="#4=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Register&gt;d__5::MoveNext()" />
   <Class Class="#5=T:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.ValidationAspects.FluentValidationAspect">
-    <Instance Declaration="#1" Id="faab1a29cc7cac69">
+    <Instance Declaration="#1" Id="faab1a292f2a9db1">
       <Target LinesAvoided="2">
         <JoinPoint Advised="#2" Advising="#5" Description="#6=Wrapped by advice(s) OnEntry" Ordinal="0" />
       </Target>
     </Instance>
-    <Instance Declaration="#3" Id="faab1a2901886d47">
+    <Instance Declaration="#3" Id="faab1a29e6081997">
       <Target LinesAvoided="2">
         <JoinPoint Advised="#4" Advising="#5" Description="#6" />
       </Target>

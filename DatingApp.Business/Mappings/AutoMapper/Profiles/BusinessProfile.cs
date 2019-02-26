@@ -10,7 +10,8 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
         {
             //Api Resource To Domain
             CreateMap<UserForRegisterDto,User>();
-
+             
+                
             //Domain To Api Resource
             CreateMap<User,UserForDetailedDto>();
             CreateMap<User,UserForReturnTokenDto>();
