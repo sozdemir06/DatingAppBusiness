@@ -8,6 +8,7 @@ using DatingApp.Business.Extensions;
 using DatingApp.Business.Mappings.AutoMapper.Dtos;
 using DatingApp.Business.ValidationRules.FluentValidation;
 using DatingApp.WebAPI.Filters;
+using DatingApp.WebAPI.SeedData;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -43,13 +44,14 @@ namespace DatingApp.WebAPI
                  });
             services.FluentValidationServicess();
             services.AddCors();
+            services.AddTransient<Seed>();
             services.AutoMapperService();
             services.AuthServices(Configuration);
             
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,Seed seeder)
         {
             if (env.IsDevelopment())
             {
@@ -63,6 +65,7 @@ namespace DatingApp.WebAPI
             }
 
             //app.UseHttpsRedirection();
+            //seeder.SeedUsers(); 
             app.UseCors(cors=>cors.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseMvc();
