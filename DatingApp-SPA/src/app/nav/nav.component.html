@@ -1,10 +1,10 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
   <div fxLayout fxLayoutGap="10px">
-    <h1>DatinApp</h1>
-    <div class="link">
-      <button mat-button>Link-1</button>
-      <button mat-button>Link-1</button>
-      <button mat-button>Link-1</button>
+    <h1 [routerLink]="['/home']">DatingApp</h1>
+    <div *ngIf="loggedIn()" class="link">
+      <button mat-button [routerLink]="['/members']" routerLinkActive="active">Matches</button>
+      <button mat-button [routerLink]="['/lists']" routerLinkActive="active">Lists</button>
+      <button mat-button [routerLink]="['/messages']" routerLinkActive="active">Messages</button>
     </div> 
   </div>
   <div *ngIf="!loggedIn()" fxFlexAlign="baseline">
@@ -19,7 +19,7 @@
     </form>
   </div>
   <div *ngIf="loggedIn()">
-      <button mat-button [matMenuTriggerFor]="menu">Welcome User</button>
+      <button mat-button [matMenuTriggerFor]="menu">{{ userService.decodedtoken?.unique_name | titlecase}}</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>
           <mat-icon>person</mat-icon>

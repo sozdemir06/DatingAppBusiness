@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../_services/users.service';
+import { SnackbarGlobalErrorService } from '../_services/snackbar-global-error.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -10,31 +12,30 @@ export class NavComponent implements OnInit {
 model:any={};
 
   constructor(
-    private userService:UsersService
+    public userService:UsersService,
+    private alert:SnackbarGlobalErrorService,
+    private router:Router
   ) { }
 
   ngOnInit() {
-    
+   
   }
 
   login(){
     this.userService.login(this.model).subscribe(next=>{
-      console.log("Successfuly logged in");
-      console.log(next);
+      this.alert.message("success","Loged In Successfuly");
     },error=>{
-      console.log("Failed to login app");
-      console.log(error);
+       this.alert.message("error",error);
     })
   }
 
   loggedIn(){
-    const token=localStorage.getItem("token");
-    return !!token;
+    return this.userService.loggedIn();
   }
 
   logout(){
     localStorage.removeItem("token");
-    console.log("Loggout");
+    this.router.navigate(["/home"]);
   }
 
 }

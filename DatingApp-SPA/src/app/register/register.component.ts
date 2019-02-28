@@ -1,5 +1,6 @@
 import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
 import { UsersService } from '../_services/users.service';
+import { SnackbarGlobalErrorService } from '../_services/snackbar-global-error.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,8 @@ export class RegisterComponent implements OnInit {
 model:any={};
 
   constructor(
-    private usersService:UsersService
+    private usersService:UsersService,
+    private alert:SnackbarGlobalErrorService
   ) { }
 
   ngOnInit() {
@@ -24,9 +26,9 @@ cancel(){
 
 register(){
   this.usersService.register(this.model).subscribe(()=>{
-    console.log("Registered.!!");
+    this.alert.message("success","LoggedIn Successfuly");
   },error=>{
-    console.log(error);
+    this.alert.message("error",error);
   })
 }
 

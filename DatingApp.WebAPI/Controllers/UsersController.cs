@@ -8,6 +8,7 @@ namespace DatingApp.WebAPI.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;

@@ -5,6 +5,10 @@ using System.Net;
 using System.Threading.Tasks;
 using DatingApp.Business.DependencyResolvers.NetCore;
 using DatingApp.Business.Extensions;
+using DatingApp.Business.Mappings.AutoMapper.Dtos;
+using DatingApp.Business.ValidationRules.FluentValidation;
+using DatingApp.WebAPI.Filters;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -31,13 +35,17 @@ namespace DatingApp.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.BusinessServicess();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            services.AddMvc()
+                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                             .AddFluentValidation()
                              .AddJsonOptions(opt => {
                      opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                  });
+            services.FluentValidationServicess();
             services.AddCors();
             services.AutoMapperService();
             services.AuthServices(Configuration);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

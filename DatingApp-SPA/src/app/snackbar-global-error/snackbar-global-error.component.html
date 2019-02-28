@@ -1,0 +1,14 @@
+<div fxLayout fxLayoutAlign="center center" fxLayoutGap="3px">
+    <div *ngIf="data.typeofMessage=='error'" fxLayout fxLayoutAlign="center center">
+      <button mat-icon-button>
+         <mat-icon class="error">error_outline</mat-icon>
+      </button>
+      <span>{{data.message}}</span>
+    </div>
+    <div *ngIf="data.typeofMessage=='success'" fxLayout fxLayoutAlign="center center">
+        <button mat-icon-button>
+            <mat-icon class="success">check_circle_outline</mat-icon>
+         </button>
+         <span>{{data.message}}</span>
+    </div>
+  </div>

@@ -13,6 +13,13 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { UsersService } from './_services/users.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { ErrorInterceptorProvide } from './_interceptions/ErrorInterceptor';
+import { SnackbarGlobalErrorComponent } from './snackbar-global-error/snackbar-global-error.component';
+import { SnackbarGlobalErrorService } from './_services/snackbar-global-error.service';
+import { MemberListComponent } from './member-list/member-list.component';
+import { MessagesComponent } from './messages/messages.component';
+import { ListsComponent } from './lists/lists.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 @NgModule({
    declarations: [
@@ -20,7 +27,11 @@ import { RegisterComponent } from './register/register.component';
       ValuesComponent,
       NavComponent,
       HomeComponent,
-      RegisterComponent
+      RegisterComponent,
+      SnackbarGlobalErrorComponent,
+      MemberListComponent,
+      MessagesComponent,
+      ListsComponent
    ],
    imports: [
       FormsModule,
@@ -33,7 +44,13 @@ import { RegisterComponent } from './register/register.component';
       FlexLayoutModule
    ],
    providers: [
-      UsersService
+      UsersService,
+      SnackbarGlobalErrorService,
+      ErrorInterceptorProvide,
+      AuthGuard
+   ],
+   entryComponents: [
+      SnackbarGlobalErrorComponent
    ],
    bootstrap: [
       AppComponent
