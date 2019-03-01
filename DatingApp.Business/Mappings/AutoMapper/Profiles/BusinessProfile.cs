@@ -1,4 +1,6 @@
+using System.Linq;
 using AutoMapper;
+using DatingApp.Business.Extensions;
 using DatingApp.Business.Mappings.AutoMapper.Dtos;
 using DatingApp.Entities.Concrete;
 
@@ -13,7 +15,20 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
              
                 
             //Domain To Api Resource
-            CreateMap<User,UserForDetailedDto>();
+            CreateMap<User,UserForListDto>()
+                    .ForMember(dest=>dest.PhotoUrl,opt=>{
+                        opt.MapFrom(src=>src.Photos.FirstOrDefault(p=>p.IsMain).Url);
+                    })
+                    .ForMember(dest=>dest.Age,opt=>{
+                        opt.MapFrom(d=>d.DateOfBirth.Calculate());
+                    });
+            CreateMap<User,UserForDetailedDto>()
+                    .ForMember(dest=>dest.PhotoUrl,opt=>{
+                        opt.MapFrom(src=>src.Photos.FirstOrDefault(p=>p.IsMain).Url);
+                    })
+                    .ForMember(dest=>dest.Age,opt=>{
+                        opt.MapFrom(d=>d.DateOfBirth.Calculate());
+                    });
             CreateMap<User,UserForReturnTokenDto>();
 
         }

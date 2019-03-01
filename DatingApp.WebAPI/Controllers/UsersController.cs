@@ -17,6 +17,20 @@ namespace DatingApp.WebAPI.Controllers
             this.userService = userService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users=await userService.GetUSersWithPhotos();
+            return Ok(users);
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUser(int userId)
+        {
+            var user=await userService.GetUser(userId);
+            return Ok(user);
+        }
+
         [AllowAnonymous]    
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto)

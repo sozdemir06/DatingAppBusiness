@@ -31,6 +31,28 @@ namespace DatingApp.Business.Concrete.Managers
 
         }
 
+        public async Task<UserForDetailedDto> GetUser(int userId)
+        {
+            var user=await userDal.GetUserWithPhotos(userId);
+            if(user==null)
+            {
+                throw new Exception("User not found.!!");
+            }
+            var userMap=mapper.Map<UserForDetailedDto>(user);
+            return userMap;
+        }
+
+        public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos()
+        {
+            var users=await userDal.GetUsersWithPhotos();
+            if(users==null)
+            {
+                throw new Exception("Failed to retrieve user list.!!");
+            }
+            var userMapList=mapper.Map<IEnumerable<UserForListDto>>(users);
+            return userMapList;
+        }
+
         [FluentValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<UserForReturnTokenDto> Login(UserForLoginDto userForLoginDto)
         {
