@@ -3,6 +3,8 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { IUser } from '../_models/IUser';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,19 @@ decodedtoken:any;
 
 constructor(private http:HttpClient) { }
 
+
+
+getUsers():Observable<IUser[]>{
+  return this.http.get<IUser[]>(this.apiUrl+"users");
+}
+
+getUser(id:number):Observable<IUser>{
+  return this.http.get<IUser>(this.apiUrl+"users/"+id);
+}
+
+updateUser(id:number,user:IUser){
+  return this.http.put(this.apiUrl+"users/"+id,user);
+}
 
 login(model:any){
   return this.http.post(this.apiUrl+"users/login",model)

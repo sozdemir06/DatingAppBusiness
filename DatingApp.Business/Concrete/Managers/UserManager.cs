@@ -13,6 +13,7 @@ using DatingApp.Core.Utilities.Helpers.AuthHelpers;
 using DatingApp.DataAccess.Abstract;
 using DatingApp.Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 
 
@@ -23,8 +24,10 @@ namespace DatingApp.Business.Concrete.Managers
         private readonly IUserDal userDal;
         private readonly IMapper mapper;
         private readonly IAuthHelper authHelper;
-        public UserManager(IUserDal userDal, IMapper mapper,IAuthHelper authHelper)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public UserManager(IUserDal userDal, IMapper mapper, IAuthHelper authHelper, IHttpContextAccessor httpContextAccessor)
         {
+            this.httpContextAccessor = httpContextAccessor;
             this.authHelper = authHelper;
             this.mapper = mapper;
             this.userDal = userDal;
@@ -33,23 +36,23 @@ namespace DatingApp.Business.Concrete.Managers
 
         public async Task<UserForDetailedDto> GetUser(int userId)
         {
-            var user=await userDal.GetUserWithPhotos(userId);
-            if(user==null)
+            var user = await userDal.GetUserWithPhotos(userId);
+            if (user == null)
             {
                 throw new Exception("User not found.!!");
             }
-            var userMap=mapper.Map<UserForDetailedDto>(user);
+            var userMap = mapper.Map<UserForDetailedDto>(user);
             return userMap;
         }
 
         public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos()
         {
-            var users=await userDal.GetUsersWithPhotos();
-            if(users==null)
+            var users = await userDal.GetUsersWithPhotos();
+            if (users == null)
             {
                 throw new Exception("Failed to retrieve user list.!!");
             }
-            var userMapList=mapper.Map<IEnumerable<UserForListDto>>(users);
+            var userMapList = mapper.Map<IEnumerable<UserForListDto>>(users);
             return userMapList;
         }
 
@@ -69,9 +72,9 @@ namespace DatingApp.Business.Concrete.Managers
             }
 
             var userToReturn = mapper.Map<UserForReturnTokenDto>(userFromRepo);
-            string[] userRoles=new string[]{};
+            string[] userRoles = new string[] { };
 
-            var token = authHelper.GenerateJwtToken(userFromRepo.Id,userFromRepo.UserName,userRoles);
+            var token = authHelper.GenerateJwtToken(userFromRepo.Id, userFromRepo.UserName, userRoles);
             if (string.IsNullOrEmpty(token))
             {
                 throw new Exception("Jwt token Unable to created.!!");
@@ -107,6 +110,31 @@ namespace DatingApp.Business.Concrete.Managers
 
             var userToReturn = mapper.Map<UserForDetailedDto>(userForCreate);
             return userToReturn;
+        }
+
+        [FluentValidationAspect(typeof(UserForUpdateDtoValidator))]
+        public async Task<UserForUpdateDto> UpdateUser(int userId, UserForUpdateDto userForUpdateDto)
+        {
+                if(userId!=int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                {
+                    throw new Exception("You can't update this profile because the profile does not belog to you.!!");
+                }
+
+                var userFromRepo=await userDal.Get(u=>u.Id==userId);
+                if(userFromRepo==null)
+                {
+                    throw new Exception("User profile could't be find.!!");
+                }
+
+                var userForUpdate=mapper.Map(userForUpdateDto,userFromRepo);
+                var updateUser=await userDal.Update(userForUpdate);
+                if(!updateUser)
+                {
+                    throw new Exception("Your profile could not be updated");
+                }
+
+                return userForUpdateDto;    
+
         }
     }
 }

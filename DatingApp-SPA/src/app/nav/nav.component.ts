@@ -26,6 +26,8 @@ model:any={};
       this.alert.message("success","Loged In Successfuly");
     },error=>{
        this.alert.message("error",error);
+    },()=>{
+      this.router.navigate(["/members"]);
     })
   }
 

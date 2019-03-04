@@ -31,6 +31,13 @@ namespace DatingApp.WebAPI.Controllers
             return Ok(user);
         }
 
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> UpdateUser(int userId,[FromBody]UserForUpdateDto userForUpdateDto)
+        {
+            var updateUser=await userService.UpdateUser(userId,userForUpdateDto);
+            return Ok(updateUser);
+        }
+
         [AllowAnonymous]    
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto)

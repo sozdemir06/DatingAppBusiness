@@ -1,0 +1,39 @@
+<div class="container" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="10px" style="width: 100%; margin-top:30px;" >
+    <div class="left-column" fxFlex="400px">
+       <mat-card>
+           <img  src="{{user?.photoUrl}}">
+        <mat-card-content>
+            <strong>Location:</strong>
+            <p>{{user?.country}},{{user?.city}}</p>
+            <strong>Age:</strong>
+            <p>{{user?.age}}</p>
+            <strong>Last Active:</strong>
+            <p>{{user?.lastActive}}</p> 
+            <strong>Member Since:</strong>
+            <p>{{user?.created}}</p>   
+        </mat-card-content>
+        <mat-card-footer fxLayout="row" fxLayoutGap="5px">
+            <button mat-raised-button color="primary" fxFlex="50%">Like</button>
+            <button mat-raised-button color="warn" fxFlex="50%">Message</button>
+        </mat-card-footer>
+       </mat-card> 
+    </div>
+    <div class="right-column" fxFlex="700px;">
+        <mat-tab-group>
+            <mat-tab label="About'{{user?.username}}">
+                <h4>Description</h4>
+                <p>{{user?.introduction}}</p>
+                <h4>Looking For</h4>
+                <p>{{user?.lookingFor}}</p>
+            </mat-tab>
+            <mat-tab label="Interests">
+                <h4>Interesets</h4>
+                <p>{{user?.interests}}</p>
+            </mat-tab>
+            <mat-tab label="Photos">
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImage"></ngx-gallery>
+            </mat-tab>
+            <mat-tab label="Messages">Your messages is Goes Here</mat-tab>
+        </mat-tab-group>              
+    </div>
+</div>

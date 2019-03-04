@@ -19,9 +19,9 @@
     </form>
   </div>
   <div *ngIf="loggedIn()">
-      <button mat-button [matMenuTriggerFor]="menu">{{ userService.decodedtoken?.unique_name | titlecase}}</button>
+      <button mat-button [matMenuTriggerFor]="menu">Welcome {{ userService.decodedtoken?.unique_name | titlecase}}</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item [routerLink]="['/member-edit']" >
           <mat-icon>person</mat-icon>
           <span>Edit Profile</span>
         </button>

@@ -1,0 +1,11 @@
+mat-card>img{
+    max-width: 100%;
+    min-width: 100%;
+}
+.right-column{
+    padding: 15px;
+}
+
+.right-column>mat-tab-group>mat-tab{
+    padding:15px;
+}

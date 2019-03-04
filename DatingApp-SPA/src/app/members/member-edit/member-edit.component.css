@@ -1,0 +1,19 @@
+mat-card>img{
+    max-width: 100%;
+    min-width: 100%;
+}
+.right-column{
+    padding: 15px;
+}
+
+.right-column>mat-tab-group>mat-tab{
+    padding:15px;
+}
+.alert-info{
+    width:100%;
+    min-height: 25px;
+    background-color: lightskyblue;
+    text-align:start center;
+    padding:8px;
+    
+}

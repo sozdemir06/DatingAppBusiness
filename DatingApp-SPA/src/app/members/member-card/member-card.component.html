@@ -1,0 +1,23 @@
+<mat-card fxFlex.lg="160px" fxFlex.md="240px" fxFlex.sm="450px" style="margin-bottom:10px;">
+    <img  mat-card-lg-image src="{{user.photoUrl}}">
+  <mat-card-title-group fxLayout="column" fxLayoutAlign="start center">
+    <mat-card-title>
+      <mat-icon>person</mat-icon>&nbsp;
+      <span>{{user.knownAs}},{{user.age}}</span>
+    </mat-card-title>
+    <mat-card-subtitle fxLayoutAlign="center center">
+      <span>{{user.username}}</span>
+    </mat-card-subtitle>
+  </mat-card-title-group>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center">
+    <button mat-icon-button [routerLink]="['/members/',user.id]">
+      <mat-icon>person</mat-icon>
+    </button>
+    <button mat-icon-button>
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button>
+          <mat-icon>mail_outline</mat-icon>
+        </button>
+  </mat-card-actions>
+</mat-card>

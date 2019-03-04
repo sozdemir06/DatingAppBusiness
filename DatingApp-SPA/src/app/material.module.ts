@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatListModule,MatToolbarModule,
           MatButtonModule,
           MatFormFieldModule,
-          MatInputModule,MatMenuModule,MatIconModule,MatCardModule,MatSnackBarModule } from "@angular/material";
+          MatInputModule,MatMenuModule,MatIconModule,MatCardModule,MatSnackBarModule,
+          MatTabsModule } from "@angular/material";
 
 @NgModule({
     declarations: [],
@@ -17,7 +18,8 @@ import { MatListModule,MatToolbarModule,
         MatMenuModule,
         MatIconModule,
         MatCardModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatTabsModule
     ],
     exports: [
         MatListModule,
@@ -28,7 +30,8 @@ import { MatListModule,MatToolbarModule,
         MatMenuModule,
         MatIconModule,
         MatCardModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatTabsModule
     ],
     providers: [],
 })

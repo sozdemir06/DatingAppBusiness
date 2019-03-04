@@ -1,0 +1,47 @@
+<div class="container" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="10px" style="width: 100%; margin-top:30px;" >
+  <div class="left-column" fxFlex="400px">
+    <h4>Your Profile</h4>
+     <mat-card>
+         <img  src="{{user?.photoUrl}}">
+      <mat-card-content>
+          <strong>Location:</strong>
+          <p>{{user?.country}},{{user?.city}}</p>
+          <strong>Age:</strong>
+          <p>{{user?.age}}</p>
+          <strong>Last Active:</strong>
+          <p>{{user?.lastActive}}</p> 
+          <strong>Member Since:</strong>
+          <p>{{user?.created}}</p>   
+      </mat-card-content>
+      <mat-card-footer fxLayout="row" fxLayoutGap="5px">
+          <button [disabled]="!editForm.dirty" mat-raised-button color="primary" fxFlex="100%" form="editForm">Save Changes</button>
+      </mat-card-footer>
+     </mat-card> 
+  </div>
+  <div class="right-column" fxFlex="700px;">
+    <div *ngIf="editForm.dirty" class="alert-info"><strong>Information:</strong> You have made changes. Any unsaved changes will be lost.!</div>
+      <mat-tab-group>
+          <mat-tab label="About'{{user?.username}}">
+            <form #editForm="ngForm" (ngSubmit)="updateUser()" id="editForm">
+              <h4>Description</h4>
+              <textarea matInput name="introduction" rows="6" [(ngModel)]="user.introduction" ></textarea>
+              <h4>LookingFor</h4>
+              <textarea matInput name="lookingFor" rows="6" [(ngModel)]="user.lookingFor" ></textarea>
+              <h4>Interests</h4>
+              <textarea matInput name="interests" rows="6" [(ngModel)]="user.interests" ></textarea>         
+              <div class="form-inline" fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field fxFlex="50%">
+                    <input matInput type="text" name="city" [(ngModel)]="user.city" placeholder="City">
+                </mat-form-field>
+                <mat-form-field fxFlex="50%">
+                    <input matInput type="text" name="country" [(ngModel)]="user.country" placeholder="Country">
+                </mat-form-field>
+              </div>
+            </form>
+          </mat-tab>
+          <mat-tab label="Photos">
+             <p>Edit Your Photos</p>
+          </mat-tab>
+      </mat-tab-group>              
+  </div>
+</div>

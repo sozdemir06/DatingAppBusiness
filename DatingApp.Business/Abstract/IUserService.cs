@@ -11,6 +11,7 @@ namespace DatingApp.Business.Abstract
          Task<UserForReturnTokenDto> Login(UserForLoginDto userForLoginDto);
          Task<IEnumerable<UserForListDto>> GetUSersWithPhotos();
          Task<UserForDetailedDto> GetUser(int userId);
+         Task<UserForUpdateDto> UpdateUser(int userId,UserForUpdateDto userForUpdateDto);
          
     }
 }
