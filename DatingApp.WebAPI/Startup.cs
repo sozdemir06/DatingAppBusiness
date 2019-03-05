@@ -47,6 +47,7 @@ namespace DatingApp.WebAPI
             services.AddTransient<Seed>();
             services.AutoMapperService();
             services.AuthServices(Configuration);
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             
         }
 

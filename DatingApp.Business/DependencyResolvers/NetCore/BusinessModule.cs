@@ -20,6 +20,8 @@ namespace DatingApp.Business.DependencyResolvers.NetCore
             services.AddScoped<IUserService,UserManager>();
             services.AddScoped<IUserDal,EfUserDal>();
             services.AddScoped<IAuthHelper,AuthHelper>();
+            services.AddScoped<IPhotoService,PhotoManager>();
+            services.AddScoped<IPhotoDal,EfPhotoDal>();
             
 
             return services;
