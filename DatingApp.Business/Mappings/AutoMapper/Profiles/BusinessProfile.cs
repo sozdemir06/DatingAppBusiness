@@ -13,6 +13,7 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
             //Api Resource To Domain
             CreateMap<UserForRegisterDto,User>();
             CreateMap<UserForUpdateDto,User>();
+            CreateMap<PhotoForCreationDto,Photo>();
              
                 
             //Domain To Api Resource
@@ -31,6 +32,8 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
                         opt.MapFrom(d=>d.DateOfBirth.Calculate());
                     });
             CreateMap<User,UserForReturnTokenDto>();
+            CreateMap<Photo,PhotosForDetailedDto>();
+            CreateMap<Photo,PhotosForReturnDto>();
 
         }
     }

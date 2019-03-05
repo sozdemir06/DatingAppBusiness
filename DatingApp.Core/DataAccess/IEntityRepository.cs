@@ -12,6 +12,6 @@ namespace DatingApp.Core.DataAccess
          Task<T> Get(Expression<Func<T,bool>> filter);
          Task<bool> Update(T entity);
          Task<bool> Delete(T Entity);
-         Task<bool> Add(T entity);
+         Task<T> Add(T entity);
     }
 }

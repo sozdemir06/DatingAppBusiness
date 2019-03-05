@@ -12,13 +12,14 @@ namespace DatingApp.Core.DataAccess.EntityFrameWork
     where TEntity : class, IEntity, new()
     where TContext : DbContext, new()
     {
-        public async Task<bool> Add(TEntity entity)
+        public async Task<TEntity> Add(TEntity entity)
         {
              using(var context=new TContext())
              {
                  var addedEntity=context.Entry(entity);
                      addedEntity.State=EntityState.Added;
-                 return await context.SaveChangesAsync()>0;   
+                     await context.SaveChangesAsync();
+                     return entity; 
              }
         }
 

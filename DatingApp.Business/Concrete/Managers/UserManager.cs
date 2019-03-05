@@ -103,7 +103,7 @@ namespace DatingApp.Business.Concrete.Managers
                 throw new Exception("This Email address is already registered.!!");
             }
             var saveUser = await userDal.Add(userForCreate);
-            if (!saveUser)
+            if (saveUser!=null)
             {
                 throw new Exception("Could not registered.!!");
             }

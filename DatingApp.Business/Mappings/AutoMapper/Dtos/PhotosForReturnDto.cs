@@ -1,9 +1,8 @@
 using System;
-using DatingApp.Core.Entities;
 
-namespace DatingApp.Entities.Concrete
+namespace DatingApp.Business.Mappings.AutoMapper.Dtos
 {
-    public class Photo:IEntity
+    public class PhotosForReturnDto
     {
         public int Id { get; set; }
         public string Url { get; set; }
@@ -11,8 +10,5 @@ namespace DatingApp.Entities.Concrete
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
         public string PublicId { get; set; }
-        public User User { get; set; }
-        public int UserId { get; set; }
-
     }
 }
