@@ -31,7 +31,10 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
                     .ForMember(dest=>dest.Age,opt=>{
                         opt.MapFrom(d=>d.DateOfBirth.Calculate());
                     });
-            CreateMap<User,UserForReturnTokenDto>();
+            CreateMap<User,UserForReturnTokenDto>()
+                    .ForMember(dest=>dest.PhotoUrl,opt=>{
+                        opt.MapFrom(src=>src.Photos.FirstOrDefault(p=>p.IsMain).Url);
+                    });    
             CreateMap<Photo,PhotosForDetailedDto>();
             CreateMap<Photo,PhotosForReturnDto>();
 

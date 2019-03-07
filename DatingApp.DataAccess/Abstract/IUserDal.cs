@@ -10,5 +10,6 @@ namespace DatingApp.DataAccess.Abstract
         Task<bool> UserExist(string email);
         Task<IEnumerable<User>> GetUsersWithPhotos();
         Task<User> GetUserWithPhotos(int userId);
+        Task<User> CheckUserForLogin(string email);
     }
 }

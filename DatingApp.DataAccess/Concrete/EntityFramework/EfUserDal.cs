@@ -9,6 +9,14 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : IEntityRepositoryBase<User, DataContext>, IUserDal
     {
+        public async Task<User> CheckUserForLogin(string email)
+        {
+           using(var context=new DataContext())
+           {
+               return await context.Users.Include(p=>p.Photos).FirstOrDefaultAsync(u=>u.Email==email);
+           }
+        }
+
         public async Task<IEnumerable<User>> GetUsersWithPhotos()
         {
             using(var context=new DataContext())

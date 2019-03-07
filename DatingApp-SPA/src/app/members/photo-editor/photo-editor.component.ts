@@ -86,7 +86,9 @@ currentMain:IPhoto;
       this.currentMain=this.photos.filter(p=>p.isMain=== true)[0];
       this.currentMain.isMain=false;
       photo.isMain=true;
-      this.updatePhotoUrl.emit(photo.url);
+      this.userService.changeMemberPhoto(photo.url);
+      this.userService.currentUser.photoUrl=photo.url;
+      localStorage.setItem("user",JSON.stringify(this.userService.currentUser));
       this.alert.message("success","Photo successfuly set as main photo");
     },error=>{
       this.alert.message("error",error);

@@ -59,7 +59,7 @@ namespace DatingApp.Business.Concrete.Managers
         [FluentValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<UserForReturnTokenDto> Login(UserForLoginDto userForLoginDto)
         {
-            var userFromRepo = await userDal.Get(u => u.Email == userForLoginDto.Email);
+            var userFromRepo = await userDal.CheckUserForLogin(userForLoginDto.Email);
             if (userFromRepo == null)
             {
                 throw new Exception("No registered users with this email address");
