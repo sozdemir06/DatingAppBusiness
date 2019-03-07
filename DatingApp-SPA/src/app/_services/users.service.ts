@@ -30,6 +30,10 @@ updateUser(id:number,user:IUser){
   return this.http.put(this.apiUrl+"users/"+id,user);
 }
 
+setMainPhoto(userId:number,photoId:number){
+  return this.http.post(this.apiUrl+"users/"+userId+"/photos/"+photoId+"/setMain",{});
+}
+
 login(model:any){
   return this.http.post(this.apiUrl+"users/login",model)
       .pipe(
@@ -39,7 +43,6 @@ login(model:any){
             {
               localStorage.setItem("token",user.token);
               this.decodedtoken=this.jwtHelper.decodeToken(user.token);
-              console.log(this.decodedtoken);
             } 
         })
       );

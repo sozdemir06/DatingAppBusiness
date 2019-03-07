@@ -6,5 +6,6 @@ namespace DatingApp.Business.Abstract
     public interface IPhotoService
     {
          Task<PhotosForReturnDto> AddPhotoForUser(int userId,PhotoForCreationDto photoForCreationDto);
+         Task SetMainPhoto(int userId,int photoId);
     }
 }

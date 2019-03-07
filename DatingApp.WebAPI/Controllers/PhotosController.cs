@@ -25,6 +25,13 @@ namespace DatingApp.WebAPI.Controllers
          return Ok(addPhoto);
      }
 
+     [HttpPost("{photoId}/setMain")]
+     public async Task<IActionResult> SetMainPhoto(int userId,int photoId)
+     {
+         await photoService.SetMainPhoto(userId,photoId);
+         return Ok();
+     }
+
 
     }
 }

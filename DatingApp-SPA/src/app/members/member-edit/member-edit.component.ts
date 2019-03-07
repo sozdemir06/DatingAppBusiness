@@ -42,4 +42,8 @@ if(this.editForm.dirty){
     
   }
 
+  updatePhoto($event){
+    this.user.photoUrl=$event;
+  }
+
 }

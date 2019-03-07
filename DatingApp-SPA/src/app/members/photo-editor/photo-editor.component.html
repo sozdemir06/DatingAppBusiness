@@ -1,0 +1,36 @@
+<div fxLayout="row wrap" fxLayoutGap="10px" style="padding: 10px;">
+  <mat-card *ngFor="let photo of photos" fxFlex="110px">
+    <img mat-card-sm-image src="{{photo.url}}" alt="">
+    <mat-card-actions fxLayout="row">
+      <button mat-button fxFlex="50%" 
+      (click)="setMainPhoto(photo)"
+      [disabled]="photo.isMain"
+      [ngClass]="photo.isMain ? 'active':'default'"
+      >Main</button>
+      <button mat-icon-button color="warn" fxFlex="50%">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div fxLayout="row" style="padding: 10px;">
+  <mat-card>
+    <img *ngIf="!selectedImageUrl" mat-card-lg-image  (click)="fileInput.click()" src="../../../../../assets/add-img.jpg" alt="add image icon" style="cursor:pointer;">
+    <img *ngIf="selectedImageUrl" mat-card-lg-image src="{{selectedImageUrl}}" alt="add image icon">
+    <mat-card-content>
+        <mat-progress-bar *ngIf="status=='progress'" color="primary"  value="{{uploadProggress}}"></mat-progress-bar>
+        <span *ngIf="status=='progress'" class="mat-small">{{uploadProggress}}%</span>
+        <form  [formGroup]="profileForm" (ngSubmit)="profileFormSubmit()" style="display:none" id="profileForm">
+          <mat-form-field>
+            <input matInput type="text" formControlName="description" placeholder="Description">
+          </mat-form-field>
+          <input type="file" name="File" (change)="onSelectedFile($event)" #fileInput>
+        </form>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row">
+      <button mat-button form="profileForm">Save</button>
+      <button [disabled]="!selectedImageUrl" mat-button color="warn" (click)="cancelSelectedImage()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
