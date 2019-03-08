@@ -33,5 +33,13 @@ namespace DatingApp.WebAPI.Controllers
      }
 
 
+     [HttpDelete("{photoId}")]
+     public async Task<IActionResult> DeletePhoto(int userId,int photoId)
+     {
+         await photoService.DeletePhoto(userId,photoId);
+         return Ok();
+     }
+
+
     }
 }

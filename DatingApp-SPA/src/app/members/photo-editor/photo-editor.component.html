@@ -7,7 +7,7 @@
       [disabled]="photo.isMain"
       [ngClass]="photo.isMain ? 'active':'default'"
       >Main</button>
-      <button mat-icon-button color="warn" fxFlex="50%">
+      <button mat-icon-button color="warn" fxFlex="50%" (click)="deletePhoto(photo)" >
         <mat-icon>delete_outline</mat-icon>
       </button>
     </mat-card-actions>

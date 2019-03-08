@@ -4,7 +4,7 @@ import { MatListModule,MatToolbarModule,
           MatButtonModule,
           MatFormFieldModule,
           MatInputModule,MatMenuModule,MatIconModule,MatCardModule,MatSnackBarModule,
-          MatTabsModule,MatProgressBarModule } from "@angular/material";
+          MatTabsModule,MatProgressBarModule,MatRadioModule,MatDatepickerModule, MatNativeDateModule } from "@angular/material";
 
 @NgModule({
     declarations: [],
@@ -20,7 +20,10 @@ import { MatListModule,MatToolbarModule,
         MatCardModule,
         MatSnackBarModule,
         MatTabsModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     exports: [
         MatListModule,
@@ -33,7 +36,10 @@ import { MatListModule,MatToolbarModule,
         MatCardModule,
         MatSnackBarModule,
         MatTabsModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     providers: [],
 })

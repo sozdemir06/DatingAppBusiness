@@ -132,5 +132,37 @@ namespace DatingApp.Business.Concrete.Managers
 
 
         }
+
+        public async Task DeletePhoto(int userId,int photoId)
+        {
+             if (userId != int.Parse(httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                throw new Exception("You can't delete this photo  because the profile does not belog to you.!!");
+            }
+
+            var userFromRepo=await userDal.GetUserWithPhotos(userId);
+            if(!userFromRepo.Photos.Any(p=>p.Id==photoId))
+            {
+                throw new Exception("Unauthorized.!");
+            }
+
+            var photoFromRepo=await photoDal.Get(p=>p.Id==photoId);
+            if(photoFromRepo.IsMain)
+            {
+                throw new Exception("You can't delete the main photo.!!");
+            }
+
+            var deleteParams=new DeletionParams(photoFromRepo.PublicId);
+            var result=_cloudinary.Destroy(deleteParams);
+
+            if(result.Result=="ok")
+            {
+                var deleteFromDb=await photoDal.Delete(photoFromRepo);
+                if(!deleteFromDb)
+                {
+                    throw new Exception("Photo can't deleted from database.!!");
+                }
+            }
+        }
     }
 }

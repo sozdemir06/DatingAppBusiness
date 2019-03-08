@@ -2,7 +2,7 @@
   <div class="left-column" fxFlex="400px">
     <h4>Your Profile</h4>
      <mat-card>
-         <img  src="{{photoUrl}}">
+         <img  src="{{photoUrl || '../../../../../assets/user.png'}}">
       <mat-card-content>
           <strong>Location:</strong>
           <p>{{user?.country}},{{user?.city}}</p>

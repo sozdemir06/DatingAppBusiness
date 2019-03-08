@@ -71,6 +71,11 @@ currentMain:IPhoto;
             publicId:event.body["publicId"],
            };
            this.photos.push(photo);
+           if(photo.isMain){
+             this.userService.changeMemberPhoto(photo.url);
+             this.userService.currentUser.photoUrl=photo.url;
+             localStorage.setItem("user",JSON.stringify(this.userService.currentUser));
+           }
            this.status="ok";
            this.selectedImageUrl="";
            this.alert.message("success","Photo successfuly uploaded.!");
@@ -98,6 +103,19 @@ currentMain:IPhoto;
   cancelSelectedImage(){
     this.selectedImageUrl="";
     this.profileForm.reset();
+  }
+
+  deletePhoto(photo:IPhoto){
+    const dialogConfirm=confirm("Are you sure delete this photo.!!!");
+    if(dialogConfirm==true){
+        this.userService.deletePhoto(this.userService.decodedtoken.nameid,photo.id).subscribe(data=>{
+        this.photos.splice(this.photos.findIndex(i=>i.id==photo.id),1);
+        this.alert.message("success","Photo deleted successfuly.!");
+      },error=>{
+        this.alert.message("error",error);
+      });
+    }
+    
   }
 
 }

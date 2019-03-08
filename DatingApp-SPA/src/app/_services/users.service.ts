@@ -40,6 +40,10 @@ setMainPhoto(userId:number,photoId:number){
   return this.http.post(this.apiUrl+"users/"+userId+"/photos/"+photoId+"/setMain",{});
 }
 
+deletePhoto(userId:number,photoId:number){
+  return this.http.delete(this.apiUrl+"users/"+userId+"/photos/"+photoId);
+}
+
 login(model:any){
   return this.http.post(this.apiUrl+"users/login",model)
       .pipe(

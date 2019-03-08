@@ -1,7 +1,7 @@
 <div class="container" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="10px" style="width: 100%; margin-top:30px;" >
     <div class="left-column" fxFlex="400px">
        <mat-card>
-           <img  src="{{user?.photoUrl}}">
+           <img  src="{{user?.photoUrl || '../../../../../assets/user.png'}}">
         <mat-card-content>
             <strong>Location:</strong>
             <p>{{user?.country}},{{user?.city}}</p>

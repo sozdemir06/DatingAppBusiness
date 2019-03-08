@@ -7,5 +7,6 @@ namespace DatingApp.Business.Abstract
     {
          Task<PhotosForReturnDto> AddPhotoForUser(int userId,PhotoForCreationDto photoForCreationDto);
          Task SetMainPhoto(int userId,int photoId);
+         Task DeletePhoto(int userId,int photoId);
     }
 }

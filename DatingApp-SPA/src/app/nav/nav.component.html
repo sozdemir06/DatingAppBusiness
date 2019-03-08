@@ -19,7 +19,7 @@
     </form>
   </div>
   <div *ngIf="loggedIn()" fxLayout fxLayoutAlign="center center" fxLayoutGap="1px">
-      <img mat-card-avatar src="{{photoUrl}}">
+      <img mat-card-avatar src="{{photoUrl || '../../../../../assets/user.png'}}">
       <button mat-button [matMenuTriggerFor]="menu">Welcome {{ userService.decodedtoken?.unique_name | titlecase}}</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item [routerLink]="['/member-edit']" >
