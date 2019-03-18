@@ -8,9 +8,9 @@
             <strong>Age:</strong>
             <p>{{user?.age}}</p>
             <strong>Last Active:</strong>
-            <p>{{user?.lastActive}}</p> 
+            <p>{{user?.lastActive | amLocale:'tr'|amTimeAgo}}</p> 
             <strong>Member Since:</strong>
-            <p>{{user?.created}}</p>   
+            <p>{{user?.created | amLocale:'tr'| amTimeAgo}}</p>   
         </mat-card-content>
         <mat-card-footer fxLayout="row" fxLayoutGap="5px">
             <button mat-raised-button color="primary" fxFlex="50%">Like</button>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgxGalleryModule } from "ngx-gallery";
+import { MomentModule } from "ngx-moment";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ export function tokenGetter(){
       BrowserModule,
       ReactiveFormsModule,
       AppRoutingModule,
+      MomentModule,
       BrowserAnimationsModule,
       HttpClientModule,
       MaterialModule,
