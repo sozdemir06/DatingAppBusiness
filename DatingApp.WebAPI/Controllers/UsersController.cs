@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using DatingApp.Business.Abstract;
+using DatingApp.Business.Extensions;
 using DatingApp.Business.Mappings.AutoMapper.Dtos;
+using DatingApp.Core.Utilities.Helpers.AppHeaderHelper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +20,9 @@ namespace DatingApp.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
-            var users=await userService.GetUSersWithPhotos();
+            var users=await userService.GetUSersWithPhotos(Response,userParams);
             return Ok(users);
         }
 

@@ -6,9 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.Business.Abstract;
+using DatingApp.Business.Extensions;
 using DatingApp.Business.Mappings.AutoMapper.Dtos;
 using DatingApp.Business.ValidationRules.FluentValidation;
 using DatingApp.Core.Aspects.PostSharp.ValidationAspects;
+using DatingApp.Core.Utilities.Helpers.AppHeaderHelper;
 using DatingApp.Core.Utilities.Helpers.AuthHelpers;
 using DatingApp.DataAccess.Abstract;
 using DatingApp.Entities.Concrete;
@@ -45,15 +47,16 @@ namespace DatingApp.Business.Concrete.Managers
             return userMap;
         }
 
-        public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos()
+        public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos(HttpResponse response,UserParams userParams)
         {
-            var users = await userDal.GetUsersWithPhotos();
+            var users = await userDal.GetUsersWithPhotos(userParams);
             if (users == null)
             {
                 throw new Exception("Failed to retrieve user list.!!");
             }
-            var userMapList = mapper.Map<IEnumerable<UserForListDto>>(users);
-            return userMapList;
+            var userForReturn = mapper.Map<IEnumerable<UserForListDto>>(users);
+            response.AddPagination(users.CurrentPage,users.PageSize,users.TotalCount,users.TotalPages);    
+            return userForReturn;
         }
 
         [FluentValidationAspect(typeof(UserForLoginDtoValidator))]
