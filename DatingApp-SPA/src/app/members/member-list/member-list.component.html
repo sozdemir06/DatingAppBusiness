@@ -1,5 +1,13 @@
-<div class="container">
-  <div class="row" fxLayout="row wrap" fxLayoutAlign="center center"  fxLayoutAlign.gt-lg="start center" fxLayoutGap="10px" style="width:960;">
+<div class="container" style="margin-top:15px;">
+  <div class="row" fxLayout="row wrap" fxLayoutAlign="center center"  fxLayoutAlign.gt-lg="center center" fxLayoutGap="10px" style="width:960;">
     <app-member-card *ngFor="let user of users" [user]="user"></app-member-card>
   </div>
 </div>
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-paginator [length]="pagination.totalItems"
+              [pageSize]="pagination.itemsPerPage"
+              [pageSizeOptions]="[5,10,15,20,25]"
+              (page)="onChangePage($event)" class="mat-elevation-z12">
+ </mat-paginator>
+</div>
+

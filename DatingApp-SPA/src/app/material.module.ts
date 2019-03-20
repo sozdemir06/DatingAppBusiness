@@ -4,7 +4,8 @@ import { MatListModule,MatToolbarModule,
           MatButtonModule,
           MatFormFieldModule,
           MatInputModule,MatMenuModule,MatIconModule,MatCardModule,MatSnackBarModule,
-          MatTabsModule,MatProgressBarModule,MatRadioModule,MatDatepickerModule, MatNativeDateModule } from "@angular/material";
+          MatTabsModule,MatProgressBarModule,MatRadioModule,MatDatepickerModule, MatNativeDateModule,
+          MatPaginatorModule  } from "@angular/material";
 
 @NgModule({
     declarations: [],
@@ -23,7 +24,8 @@ import { MatListModule,MatToolbarModule,
         MatProgressBarModule,
         MatRadioModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatPaginatorModule
     ],
     exports: [
         MatListModule,
@@ -39,7 +41,8 @@ import { MatListModule,MatToolbarModule,
         MatProgressBarModule,
         MatRadioModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatPaginatorModule
     ],
     providers: [],
 })

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { IUser } from '../_models/IUser';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { IUserWithToken } from '../_models/IUserWithToken';
+import { PaginatedResult } from '../_models/IPagination';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,25 @@ changeMemberPhoto(url:string){
   this.currentPhoto.next(url);
 }
 
-getUsers():Observable<IUser[]>{
-  return this.http.get<IUser[]>(this.apiUrl+"users");
+getUsers(page?:any,itemPerPage?:any):Observable<PaginatedResult<IUser[]>>{
+  const paginatedResult:PaginatedResult<IUser[]>=new PaginatedResult<IUser[]>();
+  let params:any;
+
+  if(page!=null && itemPerPage!=null){
+      params=new HttpParams()
+            .set("pageNumber",page)
+            .set("pageSize",itemPerPage);
+  }
+  return this.http.get<IUser[]>(this.apiUrl+"users",{observe:'response',params})
+                  .pipe(
+                    map(response=>{
+                      paginatedResult.result=response.body;
+                      if(response.headers.get("Pagination")!=null){
+                        paginatedResult.pagination=JSON.parse(response.headers.get("Pagination"));
+                      }
+                      return paginatedResult;
+                    })
+                  );
 }
 
 getUser(id:number):Observable<IUser>{
