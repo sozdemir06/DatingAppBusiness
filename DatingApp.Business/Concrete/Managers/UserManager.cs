@@ -58,15 +58,7 @@ namespace DatingApp.Business.Concrete.Managers
                 userParams.Gender=userFromRepo.Gender=="male"?"female":"male";
             }
 
-            var minDob=DateTime.Now;
-            var maxDob=DateTime.Now;
-            if(userParams.MinAge!=18 || userParams.MaxAge!=99)
-            {
-               minDob=DateTime.Today.AddYears(-userParams.MaxAge-1);
-               maxDob=DateTime.Today.AddYears(-userParams.MinAge);
-            }
-
-            var users = await userDal.GetUsersWithPhotos(userParams,minDob,maxDob);
+            var users = await userDal.GetUsersWithPhotos(userParams);
 
             if (users == null)
             {
