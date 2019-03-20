@@ -49,7 +49,25 @@ namespace DatingApp.Business.Concrete.Managers
 
         public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos(HttpResponse response,UserParams userParams)
         {
-            var users = await userDal.GetUsersWithPhotos(userParams);
+            var currentUserId=int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userFromRepo=await userDal.GetUserWithPhotos(currentUserId);
+
+            userParams.UserId=currentUserId;
+
+            if(string.IsNullOrEmpty(userParams.Gender)){
+                userParams.Gender=userFromRepo.Gender=="male"?"female":"male";
+            }
+
+            var minDob=DateTime.Now;
+            var maxDob=DateTime.Now;
+            if(userParams.MinAge!=18 || userParams.MaxAge!=99)
+            {
+               minDob=DateTime.Today.AddYears(-userParams.MaxAge-1);
+               maxDob=DateTime.Today.AddYears(-userParams.MinAge);
+            }
+
+            var users = await userDal.GetUsersWithPhotos(userParams,minDob,maxDob);
+
             if (users == null)
             {
                 throw new Exception("Failed to retrieve user list.!!");

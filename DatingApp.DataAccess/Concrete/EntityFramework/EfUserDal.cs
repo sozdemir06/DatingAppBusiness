@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,11 +20,15 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
            }
         }
 
-        public async Task<PagedList<User>> GetUsersWithPhotos(UserParams userParams)
+        public async Task<PagedList<User>> GetUsersWithPhotos(UserParams userParams,DateTime minDob,DateTime maxDob)
         {
             using(var context=new DataContext())
             {
-                var users=context.Users.Include(p=>p.Photos);
+                var users=context.Users.Include(p=>p.Photos).AsQueryable();
+                    users=users.Where(u=>u.Id!=userParams.UserId);
+                    users=users.Where(u=>u.Gender==userParams.Gender);
+                    users=users.Where(u=>u.DateOfBirth>=minDob && u.DateOfBirth<=maxDob);
+
                 return await PagedList<User>.CreateAsync(users,userParams.PageNumber,userParams.PageSize);
             }
         }
