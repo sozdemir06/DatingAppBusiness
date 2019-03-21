@@ -25,7 +25,7 @@ changeMemberPhoto(url:string){
   this.currentPhoto.next(url);
 }
 
-getUsers(page?:any,itemPerPage?:any):Observable<PaginatedResult<IUser[]>>{
+getUsers(page?:any,itemPerPage?:any,userParams?:any):Observable<PaginatedResult<IUser[]>>{
   const paginatedResult:PaginatedResult<IUser[]>=new PaginatedResult<IUser[]>();
   let params:any;
 
@@ -34,6 +34,14 @@ getUsers(page?:any,itemPerPage?:any):Observable<PaginatedResult<IUser[]>>{
             .set("pageNumber",page)
             .set("pageSize",itemPerPage);
   }
+ 
+  if(userParams!=null){
+    params=new HttpParams()
+           .set("minAge",userParams.minAge)
+           .set("maxAge",userParams.maxAge)
+           .set("gender",userParams.gender); 
+  }
+  
   return this.http.get<IUser[]>(this.apiUrl+"users",{observe:'response',params})
                   .pipe(
                     map(response=>{

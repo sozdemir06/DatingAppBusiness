@@ -1,3 +1,21 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px" style="margin-top:15px;">
+  <form #form="ngForm" (ngSubmit)="loadUsers()" fxLayout="row" fxLayoutGap="20px">
+    <mat-form-field>
+        <input matInput type="number" [(ngModel)]="userParams.minAge" name="minAge" placeholder="MinAge">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="number" [(ngModel)]="userParams.maxAge" name="maxAge" placeholder="maxAge">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select matNativeControl required [(ngModel)]="userParams.gender" name="gender">
+          <mat-option *ngFor="let item of genderList" value="{{item.value}}">{{item.display}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Applyfilters</button>
+      <button mat-raised-button color="warn"  (click)="resetFilters()">ResetFilters</button>
+  </form>
+</div>
 <div class="container" style="margin-top:15px;">
   <div class="row" fxLayout="row wrap" fxLayoutAlign="center center"  fxLayoutAlign.gt-lg="center center" fxLayoutGap="10px" style="width:960;">
     <app-member-card *ngFor="let user of users" [user]="user"></app-member-card>

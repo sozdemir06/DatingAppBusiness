@@ -4,6 +4,7 @@ import { SnackbarGlobalErrorService } from '../../_services/snackbar-global-erro
 import { IUser } from '../../_models/IUser';
 import { ActivatedRoute } from '@angular/router';
 import { IPagination, PaginatedResult } from 'src/app/_models/IPagination';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-member-list',
@@ -12,12 +13,17 @@ import { IPagination, PaginatedResult } from 'src/app/_models/IPagination';
 })
 export class MemberListComponent implements OnInit {
 users:IUser[];
+user:IUser=JSON.parse(localStorage.getItem("user"));
 pagination:IPagination;
+genderList=[{value:"male",display:"Males"},{value:"female",display:"Females"}];
+userParams:any={};
+filterForms:FormGroup;
 
   constructor(
     private route:ActivatedRoute,
     private usersService:UsersService,
     private alert:SnackbarGlobalErrorService,
+    private fb:FormBuilder
   ) { }
 
   ngOnInit() {
@@ -25,16 +31,25 @@ pagination:IPagination;
       this.users=data["users"].result;
       this.pagination=data["users"].pagination;
     });
-   
+    this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
+    this.userParams.minAge = 18;
+    this.userParams.maxAge = 99;
+  }
+
+  resetFilters(){
+    this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
+    this.userParams.minAge = 18;
+    this.userParams.maxAge = 99;
+    this.loadUsers();
   }
 
   onChangePage($event){
-    let pageNumber=$event.pageIndex+1;
-    this.loadUsers(pageNumber,$event.pageSize);
+    this.pagination.currentPage=$event.pageIndex+1;
+    this.loadUsers();
   }
 
-  loadUsers(page?:any,pageSize?:any){
-    this.usersService.getUsers(page,pageSize)
+  loadUsers(){
+    this.usersService.getUsers(this.pagination.currentPage,this.pagination.itemsPerPage,this.userParams)
                     .subscribe((res:PaginatedResult<IUser[]>)=>{
                       this.users=res.result;
                       this.pagination=res.pagination;
