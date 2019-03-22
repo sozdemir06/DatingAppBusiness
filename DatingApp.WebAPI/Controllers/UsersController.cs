@@ -14,37 +14,39 @@ namespace DatingApp.WebAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;
-        public UsersController(IUserService userService)
+        private readonly ILikeService likeService;
+        public UsersController(IUserService userService, ILikeService likeService)
         {
+            this.likeService = likeService;
             this.userService = userService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
-            var users=await userService.GetUSersWithPhotos(Response,userParams);
+            var users = await userService.GetUSersWithPhotos(Response, userParams);
             return Ok(users);
         }
 
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUser(int userId)
         {
-            var user=await userService.GetUser(userId);
+            var user = await userService.GetUser(userId);
             return Ok(user);
         }
 
         [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateUser(int userId,[FromBody]UserForUpdateDto userForUpdateDto)
+        public async Task<IActionResult> UpdateUser(int userId, [FromBody]UserForUpdateDto userForUpdateDto)
         {
-            var updateUser=await userService.UpdateUser(userId,userForUpdateDto);
+            var updateUser = await userService.UpdateUser(userId, userForUpdateDto);
             return Ok(updateUser);
         }
 
-        [AllowAnonymous]    
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto)
         {
-            var registerUser=await userService.Register(userForRegisterDto);
+            var registerUser = await userService.Register(userForRegisterDto);
             return Ok(registerUser);
         }
 
@@ -52,8 +54,22 @@ namespace DatingApp.WebAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]UserForLoginDto userForLoginDto)
         {
-            var userToLogin=await userService.Login(userForLoginDto);
+            var userToLogin = await userService.Login(userForLoginDto);
             return Ok(userToLogin);
+        }
+
+        [HttpPost("{userId}/like/{recipientId}")]
+        public async Task<IActionResult> AddLike(int userId, int recipientId)
+        {
+            var liked=await likeService.AddLike(userId,recipientId);
+            return Ok(liked);
+        }
+
+        [HttpGet("getlikers")]
+        public async Task<IActionResult> GetUserLikers([FromQuery]UserParams userParams)
+        {
+            var users=await userService.GetUserLikers(Response,userParams);
+            return Ok(users);
         }
     }
 }

@@ -25,7 +25,7 @@ changeMemberPhoto(url:string){
   this.currentPhoto.next(url);
 }
 
-getUsers(page?:any,itemPerPage?:any,userParams?:any):Observable<PaginatedResult<IUser[]>>{
+getUsers(page?:any,itemPerPage?:any,userParams?:any,likesParams?:any):Observable<PaginatedResult<IUser[]>>{
   const paginatedResult:PaginatedResult<IUser[]>=new PaginatedResult<IUser[]>();
   let params:any;
 
@@ -41,6 +41,16 @@ getUsers(page?:any,itemPerPage?:any,userParams?:any):Observable<PaginatedResult<
            .set("maxAge",userParams.maxAge)
            .set("gender",userParams.gender); 
   }
+
+  if(likesParams==='Likers'){
+    params=new HttpParams()
+          .set("likers",'true');
+          
+  }
+  if(likesParams==='Likees'){
+    params=new HttpParams()
+          .set("likees",'true');
+  }
   
   return this.http.get<IUser[]>(this.apiUrl+"users",{observe:'response',params})
                   .pipe(
@@ -52,6 +62,31 @@ getUsers(page?:any,itemPerPage?:any,userParams?:any):Observable<PaginatedResult<
                       return paginatedResult;
                     })
                   );
+}
+
+getUserLikers(pageNumber?:any,itemsPerPage?:any,likeParams?:any){
+  const paginatedResult:PaginatedResult<IUser[]>=new PaginatedResult<IUser[]>();
+  let params:any;
+
+  if(likeParams==='Likers'){
+    params=new HttpParams()
+           .set("likers","true");
+  }
+  if(likeParams==='Likees'){
+    params=new HttpParams()
+           .set("likees","true");
+  }
+
+  return this.http.get<IUser[]>(this.apiUrl+"users/getlikers/",{observe:'response',params})
+  .pipe(
+    map(response=>{
+      paginatedResult.result=response.body;
+      if(response.headers.get("Pagination")!=null){
+        paginatedResult.pagination=JSON.parse(response.headers.get("Pagination"));
+      }
+      return paginatedResult;
+    })
+  );
 }
 
 getUser(id:number):Observable<IUser>{
@@ -68,6 +103,10 @@ setMainPhoto(userId:number,photoId:number){
 
 deletePhoto(userId:number,photoId:number){
   return this.http.delete(this.apiUrl+"users/"+userId+"/photos/"+photoId);
+}
+
+likeUser(userId:number,recipientId:number){
+  return this.http.post(this.apiUrl+"users/"+userId+"/like/"+recipientId,{});
 }
 
 login(model:any){

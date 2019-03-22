@@ -32,6 +32,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadService } from './_services/file-upload.service';
+import { ListsResolver } from './_resolvers/list.resolver';
 
 export function tokenGetter(){
    return localStorage.getItem("token");
@@ -84,7 +85,8 @@ export function tokenGetter(){
       MemberListResolver,
       MemberEditResolver,
       PreventUnsavedChanges,
-      FileUploadService
+      FileUploadService,
+      ListsResolver
    ],
    entryComponents: [
       SnackbarGlobalErrorComponent

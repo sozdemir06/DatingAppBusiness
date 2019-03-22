@@ -20,6 +20,29 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
            }
         }
 
+        public async Task<PagedList<User>> GetUserLikers(UserParams userParams)
+        {
+            using(var context=new DataContext())
+            {
+                var users=context.Users
+                            .Include(p=>p.Photos)
+                            .Include(u=>u.Likers)
+                            .Include(u=>u.Likees)
+                            .AsQueryable();
+                if(userParams.Likers)
+                {
+                    users=users.Where(i=>i.Likers.Any(u=>u.LikerId==userParams.UserId));
+                }
+                if(userParams.Likees)
+                {
+                    users=users.Where(i=>i.Likees.Any(u=>u.LikeeId==userParams.UserId));
+                }
+                
+                return await PagedList<User>.CreateAsync(users,userParams.PageNumber,userParams.PageSize);
+                
+            }
+        }
+
         public async Task<PagedList<User>> GetUsersWithPhotos(UserParams userParams)
         {
             using(var context=new DataContext())
@@ -34,7 +57,7 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
 
                         users=users.Where(u=>u.DateOfBirth>=minDob && u.DateOfBirth<=maxDob);
                     }
-                    
+               
 
                 return await PagedList<User>.CreateAsync(users,userParams.PageNumber,userParams.PageSize);
             }

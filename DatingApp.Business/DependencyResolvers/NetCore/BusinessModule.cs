@@ -2,6 +2,7 @@ using DatingApp.Business.Abstract;
 using DatingApp.Business.Concrete.Managers;
 using DatingApp.Core.Utilities.Helpers.AuthHelpers;
 using DatingApp.DataAccess.Abstract;
+using DatingApp.DataAccess.Concrete;
 using DatingApp.DataAccess.Concrete.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,8 @@ namespace DatingApp.Business.DependencyResolvers.NetCore
             services.AddScoped<IAuthHelper,AuthHelper>();
             services.AddScoped<IPhotoService,PhotoManager>();
             services.AddScoped<IPhotoDal,EfPhotoDal>();
+            services.AddScoped<ILikeService,LikeManager>();
+            services.AddScoped<ILikeDal,EfLikeDal>();
             
 
             return services;

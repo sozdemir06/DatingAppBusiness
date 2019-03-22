@@ -15,6 +15,7 @@ namespace DatingApp.Business.Abstract
          Task<IEnumerable<UserForListDto>> GetUSersWithPhotos(HttpResponse response,UserParams userParams);
          Task<UserForDetailedDto> GetUser(int userId);
          Task<UserForUpdateDto> UpdateUser(int userId,UserForUpdateDto userForUpdateDto);
+         Task<IEnumerable<UserForListDto>> GetUserLikers(HttpResponse response,UserParams userParams);
          
     }
 }

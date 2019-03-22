@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,10 @@ namespace DatingApp.Business.Concrete.Managers
         private readonly IMapper mapper;
         private readonly IAuthHelper authHelper;
         private readonly IHttpContextAccessor httpContextAccessor;
-        public UserManager(IUserDal userDal, IMapper mapper, IAuthHelper authHelper, IHttpContextAccessor httpContextAccessor)
+        private readonly ILikeDal likeDal;
+        public UserManager(IUserDal userDal, IMapper mapper, IAuthHelper authHelper, IHttpContextAccessor httpContextAccessor, ILikeDal likeDal)
         {
+            this.likeDal = likeDal;
             this.httpContextAccessor = httpContextAccessor;
             this.authHelper = authHelper;
             this.mapper = mapper;
@@ -47,15 +50,43 @@ namespace DatingApp.Business.Concrete.Managers
             return userMap;
         }
 
-        public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos(HttpResponse response,UserParams userParams)
+        public async Task<IEnumerable<UserForListDto>> GetUserLikers(HttpResponse response,UserParams userParams)
         {
-            var currentUserId=int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var userFromRepo=await userDal.GetUserWithPhotos(currentUserId);
+             var currentUserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+              userParams.UserId = currentUserId;
+            if(!userParams.Likers && !userParams.Likees)
+            {
+                throw new Exception("Not Found.!!");
+            }
+            var userFromRepo=await userDal.Get(u=>u.Id==userParams.UserId);
 
-            userParams.UserId=currentUserId;
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            }
 
-            if(string.IsNullOrEmpty(userParams.Gender)){
-                userParams.Gender=userFromRepo.Gender=="male"?"female":"male";
+            var users=await userDal.GetUserLikers(userParams);
+            if(userDal==null)
+            {
+                throw new Exception("Not found any Likers or Likees.!!");
+            }
+
+            var userForReturn=mapper.Map<IEnumerable<UserForListDto>>(users);
+            response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+            return userForReturn;
+            
+        }
+
+        public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos(HttpResponse response, UserParams userParams)
+        {
+            var currentUserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userFromRepo = await userDal.GetUserWithPhotos(currentUserId);
+
+            userParams.UserId = currentUserId;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
             }
 
             var users = await userDal.GetUsersWithPhotos(userParams);
@@ -65,7 +96,7 @@ namespace DatingApp.Business.Concrete.Managers
                 throw new Exception("Failed to retrieve user list.!!");
             }
             var userForReturn = mapper.Map<IEnumerable<UserForListDto>>(users);
-            response.AddPagination(users.CurrentPage,users.PageSize,users.TotalCount,users.TotalPages);    
+            response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
             return userForReturn;
         }
 
@@ -116,7 +147,7 @@ namespace DatingApp.Business.Concrete.Managers
                 throw new Exception("This Email address is already registered.!!");
             }
             var saveUser = await userDal.Add(userForCreate);
-            if (saveUser==null)
+            if (saveUser == null)
             {
                 throw new Exception("Could not registered.!!");
             }
@@ -128,25 +159,25 @@ namespace DatingApp.Business.Concrete.Managers
         [FluentValidationAspect(typeof(UserForUpdateDtoValidator))]
         public async Task<UserForUpdateDto> UpdateUser(int userId, UserForUpdateDto userForUpdateDto)
         {
-                if(userId!=int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                {
-                    throw new Exception("You can't update this profile because the profile does not belog to you.!!");
-                }
+            if (userId != int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                throw new Exception("You can't update this profile because the profile does not belog to you.!!");
+            }
 
-                var userFromRepo=await userDal.Get(u=>u.Id==userId);
-                if(userFromRepo==null)
-                {
-                    throw new Exception("User profile could't be find.!!");
-                }
+            var userFromRepo = await userDal.Get(u => u.Id == userId);
+            if (userFromRepo == null)
+            {
+                throw new Exception("User profile could't be find.!!");
+            }
 
-                var userForUpdate=mapper.Map(userForUpdateDto,userFromRepo);
-                var updateUser=await userDal.Update(userForUpdate);
-                if(!updateUser)
-                {
-                    throw new Exception("Your profile could not be updated");
-                }
+            var userForUpdate = mapper.Map(userForUpdateDto, userFromRepo);
+            var updateUser = await userDal.Update(userForUpdate);
+            if (!updateUser)
+            {
+                throw new Exception("Your profile could not be updated");
+            }
 
-                return userForUpdateDto;    
+            return userForUpdateDto;
 
         }
     }

@@ -13,7 +13,7 @@
     <button mat-icon-button [routerLink]="['/members/',user.id]">
       <mat-icon>person</mat-icon>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="likeUser(user.id)">
         <mat-icon>favorite</mat-icon>
       </button>
       <button mat-icon-button>
