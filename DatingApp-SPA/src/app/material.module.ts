@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { MatListModule,MatToolbarModule,
           MatButtonModule,
           MatFormFieldModule,
           MatInputModule,MatMenuModule,MatIconModule,MatCardModule,MatSnackBarModule,
           MatTabsModule,MatProgressBarModule,MatRadioModule,MatDatepickerModule, MatNativeDateModule,
-          MatPaginatorModule,MatSelectModule,MatButtonToggleModule  } from "@angular/material";
+          MatPaginatorModule,MatSelectModule,MatButtonToggleModule,MatTableModule, } from "@angular/material";
+
+
 
 @NgModule({
     declarations: [],
@@ -27,7 +30,8 @@ import { MatListModule,MatToolbarModule,
         MatNativeDateModule,
         MatPaginatorModule,
         MatSelectModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatTableModule
     ],
     exports: [
         MatListModule,
@@ -46,7 +50,8 @@ import { MatListModule,MatToolbarModule,
         MatNativeDateModule,
         MatPaginatorModule,
         MatSelectModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatTableModule
     ],
     providers: [],
 })

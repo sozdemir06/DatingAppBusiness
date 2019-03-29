@@ -12,7 +12,7 @@ import { IPagination, PaginatedResult } from '../_models/IPagination';
 })
 export class ListsComponent implements OnInit {
 users:IUser[];
-likeParams:string;
+likeParams:string="Likers";
 pagination:IPagination;
   constructor(
     private route:ActivatedRoute,
@@ -22,16 +22,16 @@ pagination:IPagination;
 
   ngOnInit() {
     this.route.data.subscribe(data=>{
-      if(data["users"].result.length==0 && this.likeParams=='Likers'){
+      if(data["users"].result.length==0 && this.likeParams==='Likers'){
         this.alert.message("error","Not found members who you liked.!!");
       }
-      if(data["users"].result.length==0 && this.likeParams=='Likees'){
+      if(data["users"].result.length==0 && this.likeParams==='Likees'){
         this.alert.message("error","Not found members who liked you.!!");
       }
       this.users=data["users"].result;
       this.pagination=data["users"].pagination;
     });
-    this.likeParams="Likers";
+    
   }
 
   onChangePage($event){

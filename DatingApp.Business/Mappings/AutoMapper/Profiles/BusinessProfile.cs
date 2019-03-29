@@ -14,6 +14,7 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
             CreateMap<UserForRegisterDto,User>();
             CreateMap<UserForUpdateDto,User>();
             CreateMap<PhotoForCreationDto,Photo>();
+            CreateMap<MessageForCreationDto,Message>().ReverseMap();
              
                 
             //Domain To Api Resource
@@ -37,6 +38,9 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
                     });    
             CreateMap<Photo,PhotosForDetailedDto>();
             CreateMap<Photo,PhotosForReturnDto>();
+            CreateMap<Message,MessageToReturnDto>()
+                        .ForMember(m=>m.SenderPhotoUrl,opt=>opt.MapFrom(u=>u.Sender.Photos.FirstOrDefault(p=>p.IsMain).Url))
+                        .ForMember(m=>m.RecipientPhotoUrl,opt=>opt.MapFrom(u=>u.Recipient.Photos.FirstOrDefault(p=>p.IsMain).Url));
 
         }
     }

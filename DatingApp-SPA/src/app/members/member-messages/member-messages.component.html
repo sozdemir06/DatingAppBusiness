@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title *ngIf="messages?.length===0">No messages yet...say hi to {{recipientName}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <mat-list *ngFor="let message of messages" >
+          <mat-list-item  *ngIf="message.senderId==recipientId">
+                <img matListAvatar src="{{message.senderPhotoUrl}}" alt="...">
+                <h3 matLine> {{message.senderKnownAs}} </h3>
+                <p matLine>
+                  <span class="demo-2">{{message.content}} </span>
+                </p>
+                <p matLine fxLayout="row" fxLayoutAlign="end start">
+                    <span>{{message.messageSent | amTimeAgo}}</span> 
+                </p>
+          </mat-list-item>
+          <mat-list-item  *ngIf="message.senderId != recipientId" class="mat-elevation-z12 active">
+              <img matListAvatar src="{{message.senderPhotoUrl}}" alt="...">
+              <strong matLine> {{message.senderKnownAs}}</strong>
+              <p matLine>
+                <span class="demo-2">{{message.content}} </span>
+              </p>
+              <p matLine fxLayout="row" fxLayoutAlign="end start">
+                  <span>{{message.messageSent | amTimeAgo}}</span>
+              </p>
+        </mat-list-item>
+        </mat-list>
+  </mat-card-content>
+  <mat-card-footer>
+      <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()" 
+      fxLayout="row" fxLayoutAlign="space-between center" >
+          <mat-form-field fxFlex>
+            <input matInput type="text" name="content"  [(ngModel)]="newMessage.content" placeholder="Send a private message to {{recipientName}}..">
+          </mat-form-field>
+          <button type="submit" mat-icon-button color="primary">
+            <mat-icon>send</mat-icon>
+          </button>
+        </form>
+  </mat-card-footer>
+</mat-card>
+     
+      
+ 
+

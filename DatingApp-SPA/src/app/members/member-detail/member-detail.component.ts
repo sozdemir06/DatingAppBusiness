@@ -13,7 +13,7 @@ export class MemberDetailComponent implements OnInit {
 user:IUser;
 galleryOptions:NgxGalleryOptions[];
 galleryImage:NgxGalleryImage[];
-
+tabsSelectedIndex:number=0;
 
   constructor(
     private userService:UsersService,
@@ -23,7 +23,11 @@ galleryImage:NgxGalleryImage[];
   ngOnInit() {
     this.route.data.subscribe(data=>{
       this.user=data["user"];
-      console.log(data)
+    });
+
+    this.route.queryParams.subscribe(data=>{
+      const selectedTabs=data["tab"];
+            this.tabsSelectedIndex=selectedTabs>0?selectedTabs:0;
     });
 
     this.galleryOptions=[{
@@ -36,6 +40,10 @@ galleryImage:NgxGalleryImage[];
     }];
 
     this.galleryImage=this.getImages();
+  }
+
+  changeTabs(tabsId:number){
+    this.tabsSelectedIndex=tabsId;
   }
 
   getImages()

@@ -25,6 +25,8 @@ namespace DatingApp.Business.DependencyResolvers.NetCore
             services.AddScoped<IPhotoDal,EfPhotoDal>();
             services.AddScoped<ILikeService,LikeManager>();
             services.AddScoped<ILikeDal,EfLikeDal>();
+            services.AddScoped<IMessageService,MessageManager>();
+            services.AddScoped<IMessageDal,EfMessageDal>();
             
 
             return services;

@@ -16,7 +16,7 @@
     <button mat-icon-button (click)="likeUser(user.id)">
         <mat-icon>favorite</mat-icon>
       </button>
-      <button mat-icon-button>
+      <button mat-icon-button  [routerLink]="['/members/',user.id]" [queryParams]="{tab:3}">
           <mat-icon>mail_outline</mat-icon>
         </button>
   </mat-card-actions>

@@ -7,6 +7,7 @@ import { IUser } from '../_models/IUser';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { IUserWithToken } from '../_models/IUserWithToken';
 import { PaginatedResult } from '../_models/IPagination';
+import { IMessage } from '../_models/IMessage';
 
 @Injectable({
   providedIn: 'root'
@@ -27,29 +28,25 @@ changeMemberPhoto(url:string){
 
 getUsers(page?:any,itemPerPage?:any,userParams?:any,likesParams?:any):Observable<PaginatedResult<IUser[]>>{
   const paginatedResult:PaginatedResult<IUser[]>=new PaginatedResult<IUser[]>();
-  let params:any;
+  let params:HttpParams=new HttpParams()
+             .set("likesParams",'Likers'); 
+
 
   if(page!=null && itemPerPage!=null){
-      params=new HttpParams()
-            .set("pageNumber",page)
-            .set("pageSize",itemPerPage);
+      params=params.append("pageNumber",page);
+      params=params.append("pageSize",itemPerPage);        
   }
  
   if(userParams!=null){
-    params=new HttpParams()
-           .set("minAge",userParams.minAge)
-           .set("maxAge",userParams.maxAge)
-           .set("gender",userParams.gender); 
-  }
-
-  if(likesParams==='Likers'){
-    params=new HttpParams()
-          .set("likers",'true');
+    params=params.append("minAge",userParams.minAge);
+    params=params.append("maxAge",userParams.maxAge);
+    params=params.append("gender",userParams.gender); 
+           
           
   }
+
   if(likesParams==='Likees'){
-    params=new HttpParams()
-          .set("likees",'true');
+    params=params.append("likees",'true');
   }
   
   return this.http.get<IUser[]>(this.apiUrl+"users",{observe:'response',params})
@@ -62,6 +59,40 @@ getUsers(page?:any,itemPerPage?:any,userParams?:any,likesParams?:any):Observable
                       return paginatedResult;
                     })
                   );
+}
+
+getUserMessages(id:number,messageParams?:any,page?:any,itemPerPage?:any,){
+  const paginatedResult:PaginatedResult<IMessage[]>=new PaginatedResult<IMessage[]>();
+  
+  let params:HttpParams=new HttpParams()
+            .set('messageContainer',messageParams);
+            
+      if(page!=null && itemPerPage!=null){
+          params=params.append("pageNumber",page)
+          params=params.append("pageSize",itemPerPage);
+      }
+    return this.http.get<IMessage[]>(this.apiUrl+"users/"+id+"/messages",{observe:'response',params})
+                    .pipe(
+                      map(response=>{
+                        paginatedResult.result=response.body;
+                        if(response.headers.get("Pagination")!=null){
+                          paginatedResult.pagination=JSON.parse(response.headers.get("Pagination"));
+                        }
+                        return paginatedResult;
+                      })
+                    ); 
+}
+
+createMessage(userId:number,message:IMessage){
+  return this.http.post(this.apiUrl+"users/"+userId+"/messages",message);
+}
+
+deleteMessage(messageId:number,userId:number){
+  return this.http.delete(this.apiUrl+"users/"+userId+"/messages/"+messageId);
+}
+
+getMessagesThread(id:number,recipientId:number){
+  return this.http.get<IMessage[]>(this.apiUrl+"users/"+id+"/messages/thread/"+recipientId);
 }
 
 getUserLikers(pageNumber?:any,itemsPerPage?:any,likeParams?:any){

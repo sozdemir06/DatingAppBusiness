@@ -14,12 +14,12 @@
         </mat-card-content>
         <mat-card-footer fxLayout="row" fxLayoutGap="5px">
             <button mat-raised-button color="primary" fxFlex="50%">Like</button>
-            <button mat-raised-button color="warn" fxFlex="50%">Message</button>
+            <button mat-raised-button color="warn" fxFlex="50%" (click)="changeTabs(3)">Message</button>
         </mat-card-footer>
        </mat-card> 
     </div>
     <div class="right-column" fxFlex="700px;">
-        <mat-tab-group>
+        <mat-tab-group [selectedIndex]="tabsSelectedIndex">
             <mat-tab label="About'{{user?.username}}">
                 <h4>Description</h4>
                 <p>{{user?.introduction}}</p> 
@@ -33,7 +33,9 @@
             <mat-tab label="Photos">
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImage"></ngx-gallery>
             </mat-tab>
-            <mat-tab label="Messages">Your messages is Goes Here</mat-tab>
+            <mat-tab label="Messages">
+                <app-member-messages [recipientId]="user.id" [recipientName]="user.knownAs"></app-member-messages> 
+            </mat-tab>
         </mat-tab-group>              
     </div>
 </div>

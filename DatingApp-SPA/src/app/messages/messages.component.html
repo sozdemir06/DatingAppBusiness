@@ -1,3 +1,59 @@
-<p>
-  messages works!
-</p>
+<section fxLayout="row" fxLayoutAlign="center center" style="margin-top:15px;">
+    <mat-button-toggle-group [(ngModel)]="messageContainer" aria-label="Font Style" fxFlex="60%">
+      <mat-button-toggle value="Unread" (click)="loadMessages()">Unread</mat-button-toggle>
+      <mat-button-toggle value="Inbox" (click)="loadMessages()">Inbox</mat-button-toggle>
+      <mat-button-toggle value="Outbox" (click)="loadMessages()">Outbox</mat-button-toggle>
+    </mat-button-toggle-group>
+</section>
+
+<section fxLayout="row" fxLayoutAlign="center center" style="margin-top:15px;" *ngIf="dataSource.data.length>0">
+    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12"   fxFlex="60%">
+        <ng-container matColumnDef="Message">
+              <mat-header-cell *matHeaderCellDef>Message</mat-header-cell> 
+              <mat-cell class="pimage" *matCellDef="let element" [routerLink]="['/members',messageContainer=='Outbox'?element.recipientId:element.senderId]" [queryParams]="{tab:3}">
+                 {{element.content}}
+              </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="From/To" *ngIf="messageContainer != 'Outbox'">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>From/To</mat-header-cell> 
+              <mat-cell  *matCellDef="let element" [routerLink]="['/members',messageContainer=='Outbox'?element.recipientId:element.senderId]" [queryParams]="{tab:3}">
+                <img  mat-card-avatar src="{{element.senderPhotoUrl}}" alt="Sender Photo">
+                <strong>{{element.senderKnownAs}}</strong>
+              </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="From/To" *ngIf="messageContainer == 'Outbox'">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>From/To</mat-header-cell> 
+          <mat-cell  *matCellDef="let element" [routerLink]="['/members',messageContainer=='Outbox'?element.recipientId:element.senderId]" [queryParams]="{tab:3}">
+            <img  mat-card-avatar src="{{element.recipientPhotoUrl}}" alt="Sender Photo">
+            <strong>{{element.recipientKnownAs}}</strong>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Send/Received">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Send/Received</mat-header-cell> 
+              <mat-cell *matCellDef="let element" [routerLink]="['/members',messageContainer=='Outbox'?element.recipientId:element.senderId]" [queryParams]="{tab:3}">
+                {{element.messageSent | amLocale:'tr' | amTimeAgo}}
+              </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell> 
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="deleteMesssage(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+    </ng-container>
+     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+     <mat-row *matRowDef="let row;columns:displayedColumns;let element;" style="cursor: pointer;">
+      </mat-row>
+    </mat-table>
+</section>
+<section fxLayout="row" fxLayoutAlign="center center" *ngIf="dataSource.data.length>0">
+    <mat-paginator [length]="pagination.totalItems"
+    [pageSize]="pagination.itemsPerPage" fxFlex="60%"
+    [pageSizeOptions]="[5,10,15,20,25]"
+    (page)="onChangePage($event)" class="mat-elevation-z12">
+</mat-paginator>
+</section>
+   
+   
+ 
