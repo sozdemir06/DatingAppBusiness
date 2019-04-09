@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Update UserRoles for {{data.user.username}}</h2>
+<mat-dialog-content class="mat-typography" style="padding:30px;">
+  <form #rolesForm="ngForm" id="rolesForm">
+    <div *ngFor="let item of data.roles">
+    <mat-checkbox
+      [checked]="item.checked"
+      [value]="item.id"  
+      (change)="item.checked=!item.checked" >
+  </mat-checkbox>
+      {{item.roleName}}
+      {{item.checked}}
+    </div>
+  </form>
+<mat-dialog-actions align="end">
+  <button mat-button (click)=closeDialog()>Cancel</button>
+  <button mat-button (click)="updateRoels()" form="rolesForm">Update</button>
+</mat-dialog-actions>

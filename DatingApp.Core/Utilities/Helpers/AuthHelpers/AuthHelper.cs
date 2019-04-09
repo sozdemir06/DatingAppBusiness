@@ -25,13 +25,22 @@ namespace DatingApp.Core.Utilities.Helpers.AuthHelpers
             }
         }
 
-        public string GenerateJwtToken(int userId, string username, string[] userroles)
+        public string GenerateJwtToken(int userId, string username,List<string> userRoles)
         {
+           
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier,userId.ToString()),
                 new Claim(ClaimTypes.Name,username)
             };
+
+             if(userRoles!=null)
+            {
+               foreach (var role in userRoles)
+               {
+                   claims.Add(new Claim(ClaimTypes.Role,role));
+               } 
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("AppSettings:Token").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

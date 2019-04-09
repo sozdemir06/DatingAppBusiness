@@ -26,6 +26,7 @@ namespace DatingApp.Entities.Concrete
         public ICollection<Like> Likees { get; set; }
         public ICollection<Message> MessageSent { get; set; }
         public ICollection<Message> MessagesRecevied { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
 
     }
 }

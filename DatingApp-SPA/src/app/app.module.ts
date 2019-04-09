@@ -35,6 +35,12 @@ import { FileUploadService } from './_services/file-upload.service';
 import { ListsResolver } from './_resolvers/list.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { HasRoleDirective } from './_directives/hasRole.directive';
+import { AdminPanelResolver } from './_resolvers/admin-panel.resolver';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
+
 
 export function tokenGetter(){
    return localStorage.getItem("token");
@@ -55,7 +61,12 @@ export function tokenGetter(){
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      MemberMessagesComponent
+      MemberMessagesComponent,
+      HasRoleDirective,
+      AdminPanelComponent,
+      UserManagementComponent,
+      RolesModalComponent
+     
    ],
    imports: [
       FormsModule,
@@ -90,10 +101,13 @@ export function tokenGetter(){
       PreventUnsavedChanges,
       FileUploadService,
       ListsResolver,
-      MessagesResolver
+      MessagesResolver,
+      AdminPanelResolver
    ],
    entryComponents: [
-      SnackbarGlobalErrorComponent
+      SnackbarGlobalErrorComponent,
+      RolesModalComponent
+     
    ],
    bootstrap: [
       AppComponent

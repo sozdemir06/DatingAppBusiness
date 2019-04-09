@@ -2,9 +2,10 @@
   <div fxLayout fxLayoutGap="10px">
     <h1 [routerLink]="['/home']">DatingApp</h1>
     <div *ngIf="loggedIn()" class="link">
-      <button mat-button [routerLink]="['/members']" routerLinkActive="active">Matches</button>
-      <button mat-button [routerLink]="['/lists']" routerLinkActive="active">Lists</button>
+      <button mat-button [routerLink]="['/members']" routerLinkActive="active">Members</button>
+      <button mat-button [routerLink]="['/lists']" routerLinkActive="active">Likes</button>
       <button mat-button [routerLink]="['/messages']" routerLinkActive="active">Messages</button>
+      <button *appHasRole="['Admin','Moderator']" mat-button [routerLink]="['/admin']" routerLinkActive="active">Admin</button>
     </div> 
   </div>
   <div *ngIf="!loggedIn()" fxFlexAlign="baseline">

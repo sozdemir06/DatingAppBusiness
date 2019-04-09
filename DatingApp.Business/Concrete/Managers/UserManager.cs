@@ -10,7 +10,9 @@ using DatingApp.Business.Abstract;
 using DatingApp.Business.Extensions;
 using DatingApp.Business.Mappings.AutoMapper.Dtos;
 using DatingApp.Business.ValidationRules.FluentValidation;
+using DatingApp.Core.Aspects.PostSharp.LogAspects;
 using DatingApp.Core.Aspects.PostSharp.ValidationAspects;
+using DatingApp.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using DatingApp.Core.Utilities.Helpers.AppHeaderHelper;
 using DatingApp.Core.Utilities.Helpers.AuthHelpers;
 using DatingApp.DataAccess.Abstract;
@@ -29,8 +31,10 @@ namespace DatingApp.Business.Concrete.Managers
         private readonly IAuthHelper authHelper;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ILikeDal likeDal;
-        public UserManager(IUserDal userDal, IMapper mapper, IAuthHelper authHelper, IHttpContextAccessor httpContextAccessor, ILikeDal likeDal)
+        private readonly IUserRoleDal userRoleDal;
+        public UserManager(IUserDal userDal, IMapper mapper, IAuthHelper authHelper, IHttpContextAccessor httpContextAccessor, ILikeDal likeDal, IUserRoleDal userRoleDal)
         {
+            this.userRoleDal = userRoleDal;
             this.likeDal = likeDal;
             this.httpContextAccessor = httpContextAccessor;
             this.authHelper = authHelper;
@@ -50,33 +54,34 @@ namespace DatingApp.Business.Concrete.Managers
             return userMap;
         }
 
-        public async Task<IEnumerable<UserForListDto>> GetUserLikers(HttpResponse response,UserParams userParams)
+        public async Task<IEnumerable<UserForListDto>> GetUserLikers(HttpResponse response, UserParams userParams)
         {
-             var currentUserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-              userParams.UserId = currentUserId;
-            if(!userParams.Likers && !userParams.Likees)
+            var currentUserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            userParams.UserId = currentUserId;
+            if (!userParams.Likers && !userParams.Likees)
             {
                 throw new Exception("Not Found.!!");
             }
-            var userFromRepo=await userDal.Get(u=>u.Id==userParams.UserId);
+            var userFromRepo = await userDal.Get(u => u.Id == userParams.UserId);
 
             if (string.IsNullOrEmpty(userParams.Gender))
             {
                 userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
             }
 
-            var users=await userDal.GetUserLikers(userParams);
-            if(userDal==null)
+            var users = await userDal.GetUserLikers(userParams);
+            if (userDal == null)
             {
                 throw new Exception("Not found any Likers or Likees.!!");
             }
 
-            var userForReturn=mapper.Map<IEnumerable<UserForListDto>>(users);
+            var userForReturn = mapper.Map<IEnumerable<UserForListDto>>(users);
             response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
             return userForReturn;
-            
+
         }
 
+        [LogAspect(typeof(PostgreSqlLogger))]
         public async Task<IEnumerable<UserForListDto>> GetUSersWithPhotos(HttpResponse response, UserParams userParams)
         {
             var currentUserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -100,6 +105,31 @@ namespace DatingApp.Business.Concrete.Managers
             return userForReturn;
         }
 
+       
+        public async Task<UserWithRolesDto> GetUserWithRoles(int userId)
+        {
+            if (userId != int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                throw new Exception("You can't access this profile.!!");
+            }
+            var userWithRolesFromRepo = await userDal.GetUserWithRoles(userId);
+            var userWithRolesForReturn = mapper.Map<UserWithRolesDto>(userWithRolesFromRepo);
+            return userWithRolesForReturn;
+        }
+
+        public async Task<IEnumerable<UserWithRolesDto>> GetUsersWithRoles()
+        {
+
+            var userWtihRoles = await userDal.GetUsersWithRoles();
+            if (userWtihRoles == null)
+            {
+                throw new Exception("Failed to retrieve users list with their roles.!!");
+            }
+
+            var userWithRolesForReturn = mapper.Map<IEnumerable<UserWithRolesDto>>(userWtihRoles);
+            return userWithRolesForReturn;
+        }
+
         [FluentValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<UserForReturnTokenDto> Login(UserForLoginDto userForLoginDto)
         {
@@ -116,9 +146,13 @@ namespace DatingApp.Business.Concrete.Managers
             }
 
             var userToReturn = mapper.Map<UserForReturnTokenDto>(userFromRepo);
-            string[] userRoles = new string[] { };
+            var userRoles = await userDal.GetUserWithRoles(userFromRepo.Id);
+            var userWithTheirRoles = mapper.Map<UserWithRolesDto>(userRoles);
 
-            var token = authHelper.GenerateJwtToken(userFromRepo.Id, userFromRepo.UserName, userRoles);
+            List<string> userRolesList = new List<string>();
+            userRolesList.AddRange(userWithTheirRoles.UserRoles.Select(t => t.RoleName));
+
+            var token = authHelper.GenerateJwtToken(userFromRepo.Id, userFromRepo.UserName, userRolesList);
             if (string.IsNullOrEmpty(token))
             {
                 throw new Exception("Jwt token Unable to created.!!");
@@ -152,6 +186,18 @@ namespace DatingApp.Business.Concrete.Managers
                 throw new Exception("Could not registered.!!");
             }
 
+            var addDefaultRole=new UserRole()
+            {
+                UserId=userForCreate.Id,
+                RoleId=1
+            };
+
+            var addRoles=await userRoleDal.Add(addDefaultRole);
+            if(addRoles==null)
+            {
+                throw new Exception("User created but cant added");
+            }
+
             var userToReturn = mapper.Map<UserForDetailedDto>(userForCreate);
             return userToReturn;
         }
@@ -178,6 +224,44 @@ namespace DatingApp.Business.Concrete.Managers
             }
 
             return userForUpdateDto;
+
+        }
+
+        public async Task<UserWithRolesDto> EditUserRoles(UserEditRolesDto userEditRolesDto)
+        {
+            var userRolesFromRepo = await userDal.GetUserWithRoles(userEditRolesDto.UserId);
+            var mappedUserRoles=mapper.Map<UserWithRolesDto>(userRolesFromRepo);
+            var userFromRepo = await userDal.Get(u => u.Id == userEditRolesDto.UserId);
+
+            var selectedRoles = userEditRolesDto.RoleId;
+            selectedRoles = selectedRoles ?? new int[]{};
+
+            var addroles=new UserRole();
+                
+            foreach (var item in selectedRoles.Except(mappedUserRoles.UserRoles.Select(p=>p.Id)))
+            {
+               addroles= await userRoleDal.Add(new UserRole{UserId=userFromRepo.Id,RoleId=item});
+
+            }
+
+            if(addroles==null)
+            {
+                throw new Exception("Can't added user roles.!!");
+            }
+
+            var userroles=mappedUserRoles.UserRoles.Select(p=>p.Id);
+            bool removeRoles=false;
+           foreach (var item in userroles.Except(selectedRoles))
+           {
+               removeRoles= await userRoleDal.Delete(new UserRole{UserId=userFromRepo.Id,RoleId=item});
+           }
+           if(!removeRoles)
+           {
+               throw new Exception("Could not remove old user roles.!!");
+           }
+
+           return mapper.Map<UserWithRolesDto>(await userDal.GetUserWithRoles(userFromRepo.Id));
+
 
         }
     }

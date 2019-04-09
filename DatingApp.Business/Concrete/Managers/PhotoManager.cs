@@ -8,6 +8,8 @@ using CloudinaryDotNet.Actions;
 using DatingApp.Business.Abstract;
 using DatingApp.Business.Extensions;
 using DatingApp.Business.Mappings.AutoMapper.Dtos;
+using DatingApp.Business.ValidationRules.FluentValidation;
+using DatingApp.Core.Aspects.PostSharp.ValidationAspects;
 using DatingApp.DataAccess.Abstract;
 using DatingApp.Entities.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +44,8 @@ namespace DatingApp.Business.Concrete.Managers
 
 
         }
+
+         [FluentValidationAspect(typeof(PhotoForCreationDtoValidator))]
         public async Task<PhotosForReturnDto> AddPhotoForUser(int userId, PhotoForCreationDto photoForCreationDto)
         {
             if (userId != int.Parse(httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))

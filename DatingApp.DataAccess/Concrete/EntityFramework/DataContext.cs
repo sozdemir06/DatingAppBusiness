@@ -16,6 +16,10 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
             modelBuilder.ApplyConfiguration(new ValueMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new LikeMap());
+            modelBuilder.ApplyConfiguration(new PhotoMap());
+            modelBuilder.ApplyConfiguration(new RoleMap());
+            modelBuilder.ApplyConfiguration(new MessagesMap());
+            modelBuilder.ApplyConfiguration(new UserRoleMap());
 
             modelBuilder.Entity<Like>()
                         .HasKey(k=>new {k.LikerId,k.LikeeId});
@@ -40,6 +44,19 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
                         .HasOne(u=>u.Recipient)
                         .WithMany(m=>m.MessagesRecevied)
                         .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<UserRole>(UserRole=>{
+                UserRole.HasKey(ur=>new {ur.UserId,ur.RoleId});
+                UserRole.HasOne(ur=>ur.Role)
+                        .WithMany(r=>r.UserRoles)
+                        .HasForeignKey(f=>f.RoleId)
+                        .IsRequired();
+                UserRole.HasOne(ur=>ur.User)
+                        .WithMany(r=>r.UserRoles)
+                        .HasForeignKey(f=>f.UserId)
+                        .IsRequired();        
+
+            });
         }
 
         public DbSet<Value> Values { get; set; }
@@ -47,5 +64,7 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Like> Likers { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
     }
 }

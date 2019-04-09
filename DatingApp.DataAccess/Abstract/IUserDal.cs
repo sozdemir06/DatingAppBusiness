@@ -15,6 +15,8 @@ namespace DatingApp.DataAccess.Abstract
         Task<User> GetUserWithPhotos(int userId);
         Task<User> CheckUserForLogin(string email);
         Task<PagedList<User>> GetUserLikers(UserParams userParams);
+        Task<User> GetUserWithRoles(int userId);
+        Task<IEnumerable<User>> GetUsersWithRoles();
        
     }
 }

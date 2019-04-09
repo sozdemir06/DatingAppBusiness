@@ -38,6 +38,10 @@ namespace DatingApp.Business.Mappings.AutoMapper.Profiles
                     });    
             CreateMap<Photo,PhotosForDetailedDto>();
             CreateMap<Photo,PhotosForReturnDto>();
+            CreateMap<User,UserWithRolesDto>()
+                    .ForMember(dest=>dest.UserRoles,opt=>{
+                        opt.MapFrom(src=>src.UserRoles.Select(x=>x.Role));
+                    });
             CreateMap<Message,MessageToReturnDto>()
                         .ForMember(m=>m.SenderPhotoUrl,opt=>opt.MapFrom(u=>u.Sender.Photos.FirstOrDefault(p=>p.IsMain).Url))
                         .ForMember(m=>m.RecipientPhotoUrl,opt=>opt.MapFrom(u=>u.Recipient.Photos.FirstOrDefault(p=>p.IsMain).Url));

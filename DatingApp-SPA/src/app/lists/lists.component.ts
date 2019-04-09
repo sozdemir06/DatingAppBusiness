@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { IUser } from '../_models/IUser';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../_services/users.service';
@@ -22,17 +22,16 @@ pagination:IPagination;
 
   ngOnInit() {
     this.route.data.subscribe(data=>{
-      if(data["users"].result.length==0 && this.likeParams==='Likers'){
-        this.alert.message("error","Not found members who you liked.!!");
-      }
-      if(data["users"].result.length==0 && this.likeParams==='Likees'){
-        this.alert.message("error","Not found members who liked you.!!");
-      }
+      
       this.users=data["users"].result;
       this.pagination=data["users"].pagination;
+      
     });
+   
     
   }
+
+ 
 
   onChangePage($event){
     this.pagination.currentPage=$event.pageIndex+1;

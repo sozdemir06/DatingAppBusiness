@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace DatingApp.WebAPI.Controllers
 {
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -23,7 +22,7 @@ namespace DatingApp.WebAPI.Controllers
         }
         // GET api/values
         
-       [AllowAnonymous]
+        [Authorize(Roles="Admin")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -31,7 +30,7 @@ namespace DatingApp.WebAPI.Controllers
             return Ok(values);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles="VIP")]
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)

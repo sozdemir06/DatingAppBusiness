@@ -63,6 +63,17 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
             }
         }
 
+        public async Task<IEnumerable<User>> GetUsersWithRoles()
+        {
+            using(var context=new DataContext())
+            {
+                var usersWithRoles=await context.Users.Include(ur=>ur.UserRoles)
+                                            .ThenInclude(r=>r.Role)
+                                            .ToListAsync();
+                return usersWithRoles;
+            }
+        }
+
         public async Task<User> GetUserWithPhotos(int userId)
         {
             using(var context=new DataContext())
@@ -70,6 +81,15 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
                 var user=await context.Users.Include(p=>p.Photos).FirstOrDefaultAsync(u=>u.Id==userId);
                 return user;
                 
+            }
+        }
+
+        public async Task<User> GetUserWithRoles(int userId)
+        {
+            using(var context=new DataContext())
+            {
+                var getuserWithRoles=await context.Users.Include(ur=>ur.UserRoles).ThenInclude(p=>p.Role).FirstOrDefaultAsync(u=>u.Id==userId);
+                return getuserWithRoles;
             }
         }
 

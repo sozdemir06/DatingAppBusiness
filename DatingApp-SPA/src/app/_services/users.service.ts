@@ -8,6 +8,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { IUserWithToken } from '../_models/IUserWithToken';
 import { PaginatedResult } from '../_models/IPagination';
 import { IMessage } from '../_models/IMessage';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable({
   providedIn: 'root'
@@ -139,6 +140,13 @@ deletePhoto(userId:number,photoId:number){
 likeUser(userId:number,recipientId:number){
   return this.http.post(this.apiUrl+"users/"+userId+"/like/"+recipientId,{});
 }
+getUsersWithRoles():Observable<IUser[]>{
+  return this.http.get<IUser[]>(this.apiUrl+"users/roles");
+}
+
+editRoles(model:any){
+  return this.http.post(this.apiUrl+"users/editRoles",model);
+}
 
 login(model:any){
   return this.http.post(this.apiUrl+"users/login",model)
@@ -159,6 +167,18 @@ login(model:any){
 
 register(model:any){
   return this.http.post(this.apiUrl+"users/register",model);
+}
+
+roleMatches(allowedRoles):boolean{
+  let isMatch=false;
+  const userRoles=this.decodedtoken.role as Array<string>;
+  allowedRoles.forEach(element => {
+    if(userRoles.includes(element)){
+      isMatch=true;
+      return;
+    }
+  });
+  return isMatch;
 }
 
 loggedIn():boolean{

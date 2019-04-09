@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.Business.Abstract;
 using DatingApp.Business.Mappings.AutoMapper.Dtos;
+using DatingApp.Business.ValidationRules.FluentValidation;
+using DatingApp.Core.Aspects.PostSharp.ValidationAspects;
 using DatingApp.Core.Utilities.Helpers.AppHeaderHelper;
 using DatingApp.DataAccess.Abstract;
 using DatingApp.Entities.Concrete;
@@ -31,6 +33,7 @@ namespace DatingApp.Business.Concrete.Managers
 
         }
 
+        [FluentValidationAspect(typeof(MessageForCreationDtoValidator))]
         public async Task<MessageToReturnDto> CreateMessage(int userId, MessageForCreationDto messageForCreationDto)
         {
             var sender=await userDal.GetUserWithPhotos(userId);

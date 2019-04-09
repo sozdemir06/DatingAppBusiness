@@ -14,6 +14,17 @@ export class AuthGuard implements CanActivate {
 
     ){}
     canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        const roles=route.firstChild.data["roles"] as Array<string>;
+        if(roles){
+            const match=this.usersService.roleMatches(roles);
+            if(match){
+                return true;
+            }else{
+                this.router.navigate(["members"]);
+                this.alert.message("error","You can't access this area.You must have admin roles.!!");
+                return false;
+            }
+        }
         if(this.usersService.loggedIn()){
             return true;
         }

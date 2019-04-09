@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Member,Admin")]
     [Route("api/users/{userId}/[controller]")]
     [ApiController]
     public class MessagesController : ControllerBase

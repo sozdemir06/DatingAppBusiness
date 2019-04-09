@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "e28b9f7eb179a370ed158173a9ccf0456604ded6"
+    "signature": "b04abbd6911f33254d2148c5393a94740ff8eb84"
   },
   "compilationOptions": {
     "defines": [
@@ -485,6 +485,133 @@
           "lib/netstandard1.0/Remotion.Linq.dll": {}
         }
       },
+      "Serilog/2.7.1": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.3",
+          "System.Collections.NonGeneric": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Serilog.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.7.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Serilog.dll": {}
+        }
+      },
+      "Serilog.AspNetCore/2.1.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
+          "Microsoft.Extensions.DependencyInjection": "2.2.0",
+          "Microsoft.Extensions.Logging": "2.2.0",
+          "Serilog": "2.7.1",
+          "Serilog.Extensions.Logging": "2.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.AspNetCore.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.AspNetCore.dll": {}
+        }
+      },
+      "Serilog.Extensions.Logging/2.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "2.2.0",
+          "Serilog": "2.7.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Extensions.Logging.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.Extensions.Logging.dll": {}
+        }
+      },
+      "Serilog.Formatting.Compact/1.0.1-dev-00925": {
+        "dependencies": {
+          "Serilog": "2.7.1"
+        },
+        "runtime": {
+          "lib/netstandard1.1/Serilog.Formatting.Compact.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.1/Serilog.Formatting.Compact.dll": {}
+        }
+      },
+      "Serilog.Settings.Configuration/3.0.2-dev-00187": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyModel": "2.1.0",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "2.2.0",
+          "Serilog": "2.7.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Settings.Configuration.dll": {
+            "assemblyVersion": "3.0.2.0",
+            "fileVersion": "3.0.2.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.Settings.Configuration.dll": {}
+        }
+      },
+      "Serilog.Sinks.File/4.1.0-dev-00817": {
+        "dependencies": {
+          "Serilog": "2.7.1",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Text.Encoding.Extensions": "4.3.0",
+          "System.Threading.Timer": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Sinks.File.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "4.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.Sinks.File.dll": {}
+        }
+      },
+      "Serilog.Sinks.PeriodicBatching/2.1.1": {
+        "dependencies": {
+          "Serilog": "2.7.1",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Threading.Timer": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.2/Serilog.Sinks.PeriodicBatching.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.2/Serilog.Sinks.PeriodicBatching.dll": {}
+        }
+      },
+      "Serilog.Sinks.PostgreSQL/2.0.1": {
+        "dependencies": {
+          "Npgsql": "4.0.4",
+          "Serilog": "2.7.1",
+          "Serilog.Sinks.PeriodicBatching": "2.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Sinks.PostgreSQL.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.Sinks.PostgreSQL.dll": {}
+        }
+      },
       "System.Collections.Immutable/1.5.0": {},
       "System.IdentityModel.Tokens.Jwt/5.4.0": {
         "dependencies": {
@@ -607,6 +734,13 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Threading.Timer/4.0.1": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.2.0",
+          "Microsoft.NETCore.Targets": "2.0.0",
+          "System.Runtime": "4.3.0"
+        }
+      },
       "System.ValueTuple/4.5.0": {},
       "System.Xml.XmlSerializer/4.3.0": {
         "dependencies": {
@@ -662,6 +796,11 @@
           "Microsoft.EntityFrameworkCore": "2.2.1",
           "Microsoft.IdentityModel.Tokens": "5.4.0",
           "PostSharp": "6.0.34",
+          "Serilog.AspNetCore": "2.1.1",
+          "Serilog.Formatting.Compact": "1.0.1-dev-00925",
+          "Serilog.Settings.Configuration": "3.0.2-dev-00187",
+          "Serilog.Sinks.File": "4.1.0-dev-00817",
+          "Serilog.Sinks.PostgreSQL": "2.0.1",
           "System.IdentityModel.Tokens.Jwt": "5.4.0"
         },
         "runtime": {
@@ -3647,6 +3786,62 @@
       "path": "remotion.linq/2.2.0",
       "hashPath": "remotion.linq.2.2.0.nupkg.sha512"
     },
+    "Serilog/2.7.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mqFJqhgmTv4th/nC1roPMWjGB3YSRH34J5XKq2OqzolJfUO4H3eeM7EJIpOjXV2XpIxFsGgBqiuhNxUt8WMdtg==",
+      "path": "serilog/2.7.1",
+      "hashPath": "serilog.2.7.1.nupkg.sha512"
+    },
+    "Serilog.AspNetCore/2.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-avgte2cI/pkGgUX3rX7PAvenMK2XkEgzovu6H9d6zT6NxPruoemt1Bx71Xng2n3nAYVttjSyNmQxKmy3LCGk2Q==",
+      "path": "serilog.aspnetcore/2.1.1",
+      "hashPath": "serilog.aspnetcore.2.1.1.nupkg.sha512"
+    },
+    "Serilog.Extensions.Logging/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6734M6GIHjwpb6/v8Hqe4KHJ4l5mRI76iNn1Urf34HIt0f7VtS4PlPvBsTxccKiTkiEHa6Wb5IbHGajuRfqpSA==",
+      "path": "serilog.extensions.logging/2.0.0",
+      "hashPath": "serilog.extensions.logging.2.0.0.nupkg.sha512"
+    },
+    "Serilog.Formatting.Compact/1.0.1-dev-00925": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/cY76aMNbS5VZ7X2gzyU/RpzaR7JnQL1QFaknaIuDWTF+TwkdMmPzwpUYlfBqKx5Nqv5fFJx6L7QgBFQCybqeQ==",
+      "path": "serilog.formatting.compact/1.0.1-dev-00925",
+      "hashPath": "serilog.formatting.compact.1.0.1-dev-00925.nupkg.sha512"
+    },
+    "Serilog.Settings.Configuration/3.0.2-dev-00187": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vVvutoB/COE7pwVWoYlFu318Zs+ZElP+areFT9X7G+yIQxNQBRKZUwsch/HMawCSgXe+3d5zfiVQphk5uWt6hg==",
+      "path": "serilog.settings.configuration/3.0.2-dev-00187",
+      "hashPath": "serilog.settings.configuration.3.0.2-dev-00187.nupkg.sha512"
+    },
+    "Serilog.Sinks.File/4.1.0-dev-00817": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xdblyj8zA+H85kQExZ9MPcd0S1icw/ZFdxRapX7hiSj/qHmj5Ezmd+vqFJTN1rZ6NKx7vbuMp4qJd8SmpqVyeA==",
+      "path": "serilog.sinks.file/4.1.0-dev-00817",
+      "hashPath": "serilog.sinks.file.4.1.0-dev-00817.nupkg.sha512"
+    },
+    "Serilog.Sinks.PeriodicBatching/2.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-b5MblvWJrT9qxRwLs0GiEHCc8iqbOKY0kWQP46RJE6slTZT7k40RbiRR2QLAQjCNRAJl/UJxr5GZ+8jsEmHRBA==",
+      "path": "serilog.sinks.periodicbatching/2.1.1",
+      "hashPath": "serilog.sinks.periodicbatching.2.1.1.nupkg.sha512"
+    },
+    "Serilog.Sinks.PostgreSQL/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5bM/8kgNFhSXEyX44fP7fzxvOExBnO7KFiPv1J2zufuKxhmv4Z4au8DZEmdVMC1ahFe8WbOYcSGUxmSpsjbqHA==",
+      "path": "serilog.sinks.postgresql/2.0.1",
+      "hashPath": "serilog.sinks.postgresql.2.0.1.nupkg.sha512"
+    },
     "System.Collections.Immutable/1.5.0": {
       "type": "package",
       "serviceable": true,
@@ -3716,6 +3911,13 @@
       "sha512": "sha512-I1tkfQlAoMM2URscUtpcRo/hX0jinXx6a/KUtEQoz3owaYwl3qwsO8cbzYVVnjxrzxjHo3nJC+62uolgeGIS9A==",
       "path": "system.security.principal/4.3.0",
       "hashPath": "system.security.principal.4.3.0.nupkg.sha512"
+    },
+    "System.Threading.Timer/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-saGfUV8uqVW6LeURiqxcGhZ24PzuRNaUBtbhVeuUAvky1naH395A/1nY0P2bWvrw/BreRtIB/EzTDkGBpqCwEw==",
+      "path": "system.threading.timer/4.0.1",
+      "hashPath": "system.threading.timer.4.0.1.nupkg.sha512"
     },
     "System.ValueTuple/4.5.0": {
       "type": "package",

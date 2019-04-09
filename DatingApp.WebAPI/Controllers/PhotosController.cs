@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Member,Admin")]
     [Route("api/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.WebAPI.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -21,6 +21,7 @@ namespace DatingApp.WebAPI.Controllers
             this.userService = userService;
         }
 
+        [Authorize(Roles="Member,Admin")]
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
@@ -28,6 +29,7 @@ namespace DatingApp.WebAPI.Controllers
             return Ok(users);
         }
 
+        [Authorize(Roles="Member,Admin")]
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUser(int userId)
         {
@@ -35,6 +37,7 @@ namespace DatingApp.WebAPI.Controllers
             return Ok(user);
         }
 
+        [Authorize(Roles="Member,Admin")]
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUser(int userId, [FromBody]UserForUpdateDto userForUpdateDto)
         {
@@ -58,6 +61,7 @@ namespace DatingApp.WebAPI.Controllers
             return Ok(userToLogin);
         }
 
+        [Authorize(Roles="Member,Admin")]
         [HttpPost("{userId}/like/{recipientId}")]
         public async Task<IActionResult> AddLike(int userId, int recipientId)
         {
@@ -65,11 +69,37 @@ namespace DatingApp.WebAPI.Controllers
             return Ok(liked);
         }
 
+        [Authorize(Roles="Member,Admin")]
         [HttpGet("getlikers")]
         public async Task<IActionResult> GetUserLikers([FromQuery]UserParams userParams)
         {
             var users=await userService.GetUserLikers(Response,userParams);
             return Ok(users);
+        }
+
+        [Authorize(Roles="Member,Admin")]
+        [HttpGet("{userId}/roles")]
+        public async Task<IActionResult> GetUserWithRoles(int userId)
+        {
+            var getuserWithRoles=await userService.GetUserWithRoles(userId);
+            return Ok(getuserWithRoles);
+        }
+
+
+        [Authorize(Roles="Admin,Moderator")]
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetUsersWithRoles()
+        {
+            var userWithroles=await userService.GetUsersWithRoles();
+            return Ok(userWithroles);
+        }
+
+        [Authorize(Roles="Admin,Moderator")]
+        [HttpPost("editRoles")]
+        public async Task<IActionResult> EditUserRoles([FromBody]UserEditRolesDto userEditRolesDto)
+        {
+            var editUserRoles=await userService.EditUserRoles(userEditRolesDto);
+            return Ok(editUserRoles);
         }
     }
 }

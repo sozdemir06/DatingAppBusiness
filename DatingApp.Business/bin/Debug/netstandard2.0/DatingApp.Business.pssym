@@ -1,24 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Symbols LinesOfCode="307" PostSharpLinesOfCode="0" EnhancedTypesCount="1" SchemaVersion="1" PostSharpVersion="6.0.34.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
-  <Evolution Source="#1=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Login([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForLoginDto)" Target="#2=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Login&gt;d__9::MoveNext()" />
-  <Evolution Source="#3=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Register([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForRegisterDto)" Target="#4=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Register&gt;d__10::MoveNext()" />
-  <Evolution Source="#5=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::UpdateUser(System.Int32, [DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForUpdateDto)" Target="#6=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;UpdateUser&gt;d__11::MoveNext()" />
-  <Class Class="#7=T:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.ValidationAspects.FluentValidationAspect">
-    <Instance Declaration="#1" Id="faab1a295eea0a6a">
+<Symbols LinesOfCode="339" PostSharpLinesOfCode="0" EnhancedTypesCount="3" SchemaVersion="1" PostSharpVersion="6.0.34.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
+  <Evolution Source="#1=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.MessageManager::CreateMessage(System.Int32, [DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.MessageForCreationDto)" Target="#2=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.MessageManager+&lt;CreateMessage&gt;d__5::MoveNext()" />
+  <Evolution Source="#3=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.PhotoManager::AddPhotoForUser(System.Int32, [DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.PhotoForCreationDto)" Target="#4=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.PhotoManager+&lt;AddPhotoForUser&gt;d__7::MoveNext()" />
+  <Evolution Source="#5=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::GetUSersWithPhotos(Microsoft.AspNetCore.Http.HttpResponse, DatingApp.Core.Utilities.Helpers.AppHeaderHelper.UserParams)" Target="#6=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;GetUSersWithPhotos&gt;d__9::MoveNext()" />
+  <Evolution Source="#7=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Login([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForLoginDto)" Target="#8=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Login&gt;d__12::MoveNext()" />
+  <Evolution Source="#9=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::Register([DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForRegisterDto)" Target="#10=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;Register&gt;d__13::MoveNext()" />
+  <Evolution Source="#11=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager::UpdateUser(System.Int32, [DatingApp.Business]DatingApp.Business.Mappings.AutoMapper.Dtos.UserForUpdateDto)" Target="#12=M:[DatingApp.Business]DatingApp.Business.Concrete.Managers.UserManager+&lt;UpdateUser&gt;d__14::MoveNext()" />
+  <Class Class="#13=T:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.ValidationAspects.FluentValidationAspect">
+    <Instance Declaration="#1" Id="faab1a2903dd3760">
       <Target LinesAvoided="2">
-        <JoinPoint Advised="#2" Advising="#7" Description="#8=Wrapped by advice(s) OnEntry" Ordinal="0" />
+        <JoinPoint Advised="#2" Advising="#13" Description="#14=Wrapped by advice(s) OnEntry" Ordinal="0" />
       </Target>
     </Instance>
-    <Instance Declaration="#3" Id="faab1a2976815ddf">
+    <Instance Declaration="#3" Id="faab1a292e2f77b0">
       <Target LinesAvoided="2">
-        <JoinPoint Advised="#4" Advising="#7" Description="#8" />
+        <JoinPoint Advised="#4" Advising="#13" Description="#14" />
       </Target>
     </Instance>
-    <Instance Declaration="#5" Id="faab1a29c00c92bf">
+    <Instance Declaration="#7" Id="faab1a29c7bfba77">
       <Target LinesAvoided="2">
-        <JoinPoint Advised="#6" Advising="#7" Description="#8" Ordinal="2" />
+        <JoinPoint Advised="#8" Advising="#13" Description="#14" Ordinal="3" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#9" Id="faab1a295b01aec7">
+      <Target LinesAvoided="2">
+        <JoinPoint Advised="#10" Advising="#13" Description="#14" Ordinal="4" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#11" Id="faab1a29eff2d078">
+      <Target LinesAvoided="2">
+        <JoinPoint Advised="#12" Advising="#13" Description="#14" Ordinal="5" />
       </Target>
     </Instance>
   </Class>
-  <Annotation Target="#9=M:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.ValidationAspects.FluentValidationAspect::OnEntry(PostSharp.Aspects.MethodExecutionArgs)" Arguments="#10=2" Description="#11=PostSharp estimates that 2 line(s) of code are saved every time this advice is applied. Use the [LinesOfCodeAvoided] attribute on the aspect or specify the LinesOfCodeAvoided property on the advice attribute to override this value." />
+  <Class Class="#15=T:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.LogAspects.LogAspect">
+    <Instance Declaration="#5" Id="faab1a292e85f7c1">
+      <Target LinesAvoided="2">
+        <JoinPoint Advised="#6" Advising="#15" Description="#14" Ordinal="2" />
+      </Target>
+    </Instance>
+  </Class>
+  <Annotation Target="#16=M:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.ValidationAspects.FluentValidationAspect::OnEntry(PostSharp.Aspects.MethodExecutionArgs)" Arguments="#17=2" Description="#18=PostSharp estimates that 2 line(s) of code are saved every time this advice is applied. Use the [LinesOfCodeAvoided] attribute on the aspect or specify the LinesOfCodeAvoided property on the advice attribute to override this value." />
+  <Annotation Target="#19=M:[DatingApp.Core]DatingApp.Core.Aspects.PostSharp.LogAspects.LogAspect::OnEntry(PostSharp.Aspects.MethodExecutionArgs)" Arguments="#17" Description="#18" />
 </Symbols>

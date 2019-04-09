@@ -88,6 +88,18 @@ namespace DatingApp.WebAPI.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("DatingApp.Entities.Concrete.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RoleName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("DatingApp.Entities.Concrete.User", b =>
                 {
                     b.Property<int>("Id")
@@ -130,6 +142,19 @@ namespace DatingApp.WebAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DatingApp.Entities.Concrete.UserRole", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("DatingApp.Entities.Concrete.Value", b =>
@@ -176,6 +201,19 @@ namespace DatingApp.WebAPI.Migrations
                 {
                     b.HasOne("DatingApp.Entities.Concrete.User", "User")
                         .WithMany("Photos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DatingApp.Entities.Concrete.UserRole", b =>
+                {
+                    b.HasOne("DatingApp.Entities.Concrete.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DatingApp.Entities.Concrete.User", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

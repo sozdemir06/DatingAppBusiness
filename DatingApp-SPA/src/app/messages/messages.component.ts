@@ -43,13 +43,18 @@ dataSource=new MatTableDataSource<IMessage>();
   }
 
   deleteMesssage(messageId:number){
-    this.usersService.deleteMessage(messageId,this.usersService.decodedtoken.nameid).subscribe(data=>{
-      this.alert.message("success","Message successfuly deleted.!!");
-      this.dataSource.data=this.dataSource.data.splice(this.dataSource.data.findIndex(m=>m.id==messageId),1);
-      
-    },error=>{
-      this.alert.message("error",error);
-    })
+    const confirm=window.confirm("Are you sure delete this messages.?");
+    
+    if(confirm){
+      this.usersService.deleteMessage(messageId,this.usersService.decodedtoken.nameid).subscribe(data=>{
+        this.alert.message("success","Message successfuly deleted.!!");
+        this.dataSource.data=this.dataSource.data.splice(this.dataSource.data.findIndex(m=>m.id==messageId),1);
+        
+      },error=>{
+        this.alert.message("error",error);
+      })
+    }
+   
   }
 
   onChangePage($event){
