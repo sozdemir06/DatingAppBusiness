@@ -27,11 +27,7 @@ pagination:IPagination;
       this.pagination=data["users"].pagination;
       
     });
-   
-    
   }
-
- 
 
   onChangePage($event){
     this.pagination.currentPage=$event.pageIndex+1;

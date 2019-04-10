@@ -6,7 +6,11 @@
     </mat-button-toggle-group>
 </section>
 
-
+<section *ngIf="dataSource.data.length<=0" fxLayout="row" fxLayoutAlign="center center" style="margin-top:15px;">
+  <div class="mat-typography mat-elevation-z8" fxFlex="60%" style="padding: 15px;">
+     Message not found.!!
+  </div>
+</section>
 <section fxLayout="row" fxLayoutAlign="center center" style="margin-top:15px;" *ngIf="dataSource.data.length>0">
     <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12"   fxFlex="60%">
         <ng-container matColumnDef="Message">
