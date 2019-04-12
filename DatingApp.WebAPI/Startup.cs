@@ -75,9 +75,16 @@ namespace DatingApp.WebAPI
 
             //app.UseHttpsRedirection();
             //seeder.SeedUsers(); 
-            app.UseCors(cors=>cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(cors=>cors.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseMvc(routes=>{
+                routes.MapSpaFallbackRoute(
+                    name:"spa-fallback",
+                    defaults:new {Controller="Fallback",Action="Index"}
+                );
+            });
         }
     }
 }

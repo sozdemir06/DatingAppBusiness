@@ -8,7 +8,7 @@ namespace DatingApp.DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=DatingApp;Username=postgres;Password=466357",b=>b.MigrationsAssembly("DatingApp.WebAPI"));
+            optionsBuilder.UseNpgsql("Host=localhost;Database=DatingApp;Username=postgres;Password=yourpassword",b=>b.MigrationsAssembly("DatingApp.WebAPI"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
